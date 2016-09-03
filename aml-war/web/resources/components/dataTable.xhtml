@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+
+
+    <style type="text/css">
+        .ui-paginator-left{
+            float: left;
+            line-height: 20px;
+            vertical-align: middle;
+        }
+
+        .ui-paginator-left > span{
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1em; /*set line height back to normal*/
+            margin-left: 2px;
+        }
+
+    </style>
+    
+    <ae:default var="row" value="#{row}" />
+
+    <ae:default var="rows" value="10" />
+    <ae:default var="rowsPerPageTemplate" value="20,50,100" />
+    <ae:default var="emptyMessage"
+                value="No existen registros para la consulta." />
+
+    <ae:default var="selectionMode" value="single" />	
+
+    <ae:default var="editable" value="#{false}" />
+
+    <ae:default var="rowSelectMode" value="new" />
+
+    <ae:default var="editingRow" value="#{false}" />
+
+    <ae:default var="auditable" value="#{true}" />
+
+    <ae:default var="renderedSelectionMode" value="true" />
+    
+    <ae:default var="rendered" value="#{true}" />
+    
+    <ae:default var="options" value="#{false}" />
+
+    <p:dataTable id="#{id}" var="row" value="#{dataTable}" widgetVar="wvDat_#{id}"  
+                 rowKey="#{rowKey}" paginator="true" 
+                 paginatorTemplate="{DetailRecords} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                 paginatorPosition="bottom" rows="#{rows}"  
+                 rowsPerPageTemplate="#{rowsPerPageTemplate}"
+                 currentPageReportTemplate="Total: {totalRecords} ({currentPage} de {totalPages})"
+                 emptyMessage="#{emptyMessage}" selection="#{selection}"
+                 editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}" editMode="cell" rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"> 
+
+
+        <f:facet name="{DetailRecords}">
+            <span class="ui-corner-all" >
+                <span>
+                    <h:panelGroup layout="span" rendered="#{editable}" >
+                        Total Registros: #{totalRecords}
+                        <!--
+                        <p:spacer width="10"></p:spacer> 
+                        Seleccionados: #{selectedRecords}
+                        <p:spacer width="10"></p:spacer> 
+                        Modificados: #{totalModified}
+                        -->
+                    </h:panelGroup>
+                </span>
+            </span>
+        </f:facet>
+
+        <ui:insert name="events">
+            
+        </ui:insert>
+
+        
+        <p:column selectionMode="#{selectionMode}" style="width:16px;text-align:center" rendered="#{renderedSelectionMode}"/> 
+        
+        
+        <ae:context header="">
+            <ui:insert >
+                
+            </ui:insert>
+        </ae:context>
+
+        <p:column sortBy="#{row.created}" headerText="Creación" rendered="#{auditable}" width="130">
+            <h:outputText value="#{row.created}">
+                <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" />
+            </h:outputText>
+        </p:column>
+
+        <p:column sortBy="#{row.createdby}" headerText="Creado por" rendered="#{auditable}" width="110">
+            <h:outputText value="#{row.createdby}" />
+        </p:column>
+
+        <p:column sortBy="#{row.updated}" headerText="Actualización" rendered="#{auditable}" width="130">
+            <h:outputText value="#{row.updated}">
+                <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" />
+            </h:outputText>
+        </p:column>
+
+        <p:column sortBy="#{row.updatedby}" headerText="Actualizado por" rendered="#{auditable}" width="140">
+            <h:outputText value="#{row.updatedby}" />
+        </p:column> 
+        
+        <p:column style="width:32px;text-align: center" rendered="#{options}">
+            <ui:insert name="options"/>
+        </p:column>
+
+
+
+        <f:facet name="footer">
+            <ui:insert name="footer"/>
+        </f:facet>
+
+    </p:dataTable>
+
+
+</ui:composition>

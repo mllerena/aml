@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+        <param-value>/resources/components/ae.taglib.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!-- Primefaces Theme -->
+    <!--
+    <context-param> 
+        <param-name>primefaces.THEME</param-name> 
+        <param-value>modena</param-value> 
+    </context-param> 
+    -->
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+    <welcome-file-list>
+        <welcome-file>/home.jsf</welcome-file>
+    </welcome-file-list>
+    
+    <error-page>
+        <error-code>401</error-code>
+        <location>/401.html</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>403</error-code>
+        <location>/access-denied.jsf</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.jsf</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error.jsf</location>
+    </error-page>
+    
+    
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>UserRolesAMLRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/login.jsf</form-login-page>
+            <form-error-page>/login.jsf?error=true</form-error-page>
+        </form-login-config>
+    </login-config>
+	
+
+    <security-constraint>
+        <display-name>accessAdmin</display-name>
+        <web-resource-collection>
+            <web-resource-name>accessAdmin</web-resource-name>
+            <description />
+            <url-pattern>/home.jsf</url-pattern>
+            <url-pattern>/pages/*</url-pattern>
+            <url-pattern>/pages/administrator/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMINISTRADOR</role-name>
+        </auth-constraint>
+    </security-constraint>
+	
+    <security-constraint>
+        <display-name>accessGuest</display-name>
+        <web-resource-collection>
+            <web-resource-name>accessGuest</web-resource-name>
+            <description />
+            <url-pattern>/home.jsf</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>INVITADO</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-role>
+        <role-name>ADMINISTRADOR</role-name>
+    </security-role>
+	
+    <security-role>
+        <role-name>INVITADO</role-name>
+    </security-role>
+    
+</web-app>

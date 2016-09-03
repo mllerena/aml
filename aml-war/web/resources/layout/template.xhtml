@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui" contentType="text/html">
+
+    <ui:insert name="metadata" />
+
+    <html>
+
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+            <title>Open Source AE OpenSolutions Platform</title>
+            <!--
+            <link rel="shortcut icon" href="#{request.contextPath}/resources/favicon.ico" />
+            -->
+
+<!--
+            <h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
+            <h:outputStylesheet name="css/animate.css" library="modena-layout" />
+            <h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
+            <h:outputStylesheet name="css/ripple-effect.css" library="modena-layout" />
+            <h:outputStylesheet name="css/perfect-scrollbar.css" library="modena-layout" />
+            <h:outputStylesheet name="css/font-awesome.css" library="modena-layout" />
+            <h:outputStylesheet name="css/modena-layout.css" library="modena-layout" />
+            
+
+
+            <h:outputScript name="js/ripple-effect.js" library="modena-layout" />
+            <h:outputScript name="js/perfect-scrollbar.js" library="modena-layout" />
+            <h:outputScript name="js/layout.js" library="modena-layout" />
+<h:outputStylesheet name="style.css" library="css" />
+-->
+
+
+            <ui:insert name="head" />
+
+            <!-- <a:loadScript src="resource://jquery.js" /> 
+            <script type="text/javascript"
+            src="#{facesContext.externalContext.requestContextPath}/resources/js/equalHeight.js"></script>
+
+            <h:outputScript>
+                $(document).bind('click', function(){
+                return false;
+                });
+
+            </h:outputScript>
+            -->
+
+            <style>
+                .ui-autocomplete .ui-autocomplete-dropdown {
+                    height: 100% !important;
+                }
+                .ui-autocomplete .ui-autocomplete-dropdown.ui-state-hover {
+                    border-bottom: solid 1px #03a9f4;
+                    background-color: #e0e0e0 !important;
+                    padding: 1px 0px !important;
+                }
+
+                .layout-menu li ul li a{
+                    padding-left: 25px !important;
+                }
+                /*
+                .ui-icon {
+                    text-indent: 1px;
+                }
+                */
+                /*
+                .ui-state-hover .ui-icon {
+                    background-image: none !important;
+                 }
+                 */
+
+            </style>
+
+        </h:head>
+
+        <h:body class="BlueModena Geometry">
+
+<!--
+            <script type="text/javascript">
+                jQuery(function () {
+                    jQuery('.panels').equalHeights();
+                });
+            </script>
+-->
+
+            <p:growl autoUpdate="true" > </p:growl>
+
+            <!--
+            <ui:include src="topbar.xhtml"></ui:include> 
+
+            
+            <div id="admin-bar">
+                <div id="logo">
+                    
+                </div>
+
+                <ul >
+                    <li><div class="top-bar-home"></div> 
+                        
+                        <h:link
+                            outcome="/home.xhtml" value="homeeee"
+                            styleClass="headerLink" /></li>
+
+
+                </ul>
+            </div>
+            -->
+
+            <!--end of admin bar -->
+
+            <!--
+            <div id="header">
+                <div id="logo">
+                </div>
+
+                <div id="headerleft"></div>
+                <div id="headerright"></div>
+            </div>
+            -->
+
+
+            <ui:insert name="navigation"> </ui:insert>
+
+            <div id="wrapper">
+                <div id="wrapperIndent">
+
+                    <!--
+                    <ui:include src="layoutmenu.xhtml"></ui:include> 
+                    -->
+
+                    <div id="layout-portlets-cover">
+                        <div class="Container96 Fnone MarAuto">
+
+                            <ui:insert name="content">
+                            </ui:insert> 
+
+                            <!-- footer -->
+                            <div class="Container100">
+                                <div class="ContainerIndent TexAlCenter Fs14 BoldGray">
+                                    <!-- PrimeFaces Modena Theme And Layout  |  All Rights Reserved. -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+                        <f:facet name="start">
+                            <p:graphicImage name="images/preloader.gif" library="modena-layout"/>
+                        </f:facet>
+
+                        <f:facet name="complete">
+                            <h:outputText value="" />
+                        </f:facet>
+                    </p:ajaxStatus>
+                </div>
+            </div>
+
+
+            <h:form id="fConfirm">
+                <p:confirmDialog global="true" closeOnEscape="true" showEffect="fade"
+                                 hideEffect="fade" >
+                    <p:commandButton value="SI" type="button" process="@this"
+                                     styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button"
+                                     styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </h:form>
+            
+            
+
+
+            <h:form id="fDialog">
+                
+                <p:remoteCommand name="initPerfilUsuario" process="@this" actionListener="#{login.initialize()}" 
+                                 oncomplete="PF('wvPerfilUsuario').show();" update="dPerfilUsuario"></p:remoteCommand> 
+
+                <p:dialog id="dPerfilUsuario"
+                          header="Perfil de usuario"
+                          widgetVar="wvPerfilUsuario" minHeight="40" closeOnEscape="true"
+                          modal="true">
+
+                    <h:panelGrid columns="2" >
+
+
+                        <p:outputLabel value="Usuario:" for="itUsuario" />
+                        <h:outputText id="itUsuario" value="#{login.adUser.username}"/>
+
+                        <p:outputLabel value="Nueva Contraseña:" for="itPass1"/>
+
+                        <p:inputText id="itPass1" 
+                                     required="true" requiredMessage="El campo Contraseña es requerido"
+                                     type="password" value="#{login.pass1}" maxlength="25"/>
+
+                        <p:outputLabel value="Confirmación Contraseña:"  for="itPass2" id="olConfirm" />
+
+                        <p:inputText id="itPass2" 
+                                     required="true"
+                                     requiredMessage="El campo Confirmación Contraseña es requerido"
+                                     type="password" value="#{login.pass2}" maxlength="25"/>
+
+                        <f:facet name="footer">
+                            <div class="EmptyBox30"></div>
+                            <div style="width: 45%;margin: auto;">
+                                <h:panelGrid columns="2">
+                                <p:commandButton value="Guardar" icon="fa fa-save" actionListener="#{login.actualizarUsuario()}" />
+                                <p:commandButton value="Salir" icon="fa fa-arrow-left" type="button" ajax="false" onclick="PF('wvPerfilUsuario').hide();" />
+                                </h:panelGrid>
+                            </div>
+                        </f:facet>
+
+
+                    </h:panelGrid>
+
+                </p:dialog>
+            </h:form>
+
+
+
+        </h:body>
+    </html>
+</f:view>

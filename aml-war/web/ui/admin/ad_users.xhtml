@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../resources/layout/template.xhtml"
+                xmlns:ae="http://java.sun.com/jsf/composite/components"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+        <h:form id="frmUsuarios">
+
+            
+            
+            <!--
+            <p:dataTable id="dlUsuarios" value="#{adUser.listaUsuario}" var="row"> 
+                    
+
+                    <p:column headerText="usuario">
+                        
+                        <h:outputText value="#{row} test" />
+                    </p:column>
+            </p:dataTable>
+            <p:separator></p:separator>
+            -->
+            
+            
+            <ae:dTable value="#{adUser.listaUsuario}" var="test" > 
+                 
+
+                    <p:column headerText="test">
+                        
+                        <h:outputText value="#{test}" />
+                    </p:column>
+            </ae:dTable>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

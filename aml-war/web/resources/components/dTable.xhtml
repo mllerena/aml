@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:composite="http://java.sun.com/jsf/composite">
+
+    
+
+    <composite:interface>
+        <composite:attribute name="value"></composite:attribute>
+        <composite:attribute name="var"></composite:attribute>
+    </composite:interface>
+    
+    <composite:implementation> 
+        
+        <p:dataTable  value="#{cc.attrs.value}" var="composite.attrs.var"> 
+            <composite:insertChildren >
+                
+            </composite:insertChildren>
+            <c:set target="#{component}" property="var" value="#{cc.attrs.var}" ></c:set>
+
+        </p:dataTable>
+        
+    </composite:implementation>
+
+        
+    
+
+</ui:composition>

@@ -1,0 +1,29 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/modena">
+
+    <div class="Animated05" id="layout-menu-cover">
+        <h:form>
+            <pm:menu>
+                <p:menuitem id="rm_dashboard" value="Tablero Control" icon="icon-dvr" action="/home?faces-redirect=true"/>
+
+                <p:submenu id="smAdmins" label="Administración" icon="icon-settings_applications">
+                    <p:menuitem id="miUsuarios" value="Usuarios" icon="fa fa-user" action="/pages/administrator/ad_users?faces-redirect=true"/>
+                </p:submenu>
+                
+                <p:submenu id="smCatalogos" label="Catálogos" icon="fa fa-list-alt">
+                    <p:menuitem id="miSucursales" value="Sucursales" icon="fa fa-building" action="/pages/administrator/ad_building?faces-redirect=true"/>
+                </p:submenu>
+                
+                
+                <p:separator />
+            </pm:menu>
+        </h:form>
+
+    </div>
+
+</ui:composition>

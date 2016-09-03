@@ -1,0 +1,137 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <style type="text/css">
+        .ui-dialog-footer {
+            padding: 1px ! important;
+        }
+    </style>
+
+
+    <ae:default var="width" value="600" />
+    <ae:default var="height" value="300" />
+
+    <ae:default var="renderedNew" value="true" />
+    <ae:default var="renderedSave" value="true" />
+    <ae:default var="renderedDelete" value="true" />
+    <ae:default var="renderedCancel" value="true" />
+    <ae:default var="renderedProcess" value="false" />
+    <ae:default var="renderedGenerate" value="false" />
+
+
+    <ae:default var="labelNew" value="Guardar y agregar" />
+    <ae:default var="labelSave" value="Guardar" />
+    <ae:default var="labelDelete" value="Eliminar" />
+    <ae:default var="labelCancel" value="Cancelar" />
+    <ae:default var="labelProcess" value="Procesar" />
+    <ae:default var="labelGenerate" value="Generar" />
+
+
+    <ae:default var="messageDelete"
+                value="¿Está seguro de eliminar el registro?" />
+
+
+
+
+    <ae:context toolbarId="toolbar_#{for}" listId="list_#{for}"
+                modalId="modal_#{for}" id="#{for}" activeItem="#{dataList.activeItem}">
+
+
+
+
+        <p:dialog id="#{modalId}" widgetVar="wvEdit_#{modalId}"
+                  closeOnEscape="true" modal="true" appendTo="@(body)"
+                  resizable="false" height="#{height}" header="#{title}">
+
+            <h:form id="frm_modal_#{for}">
+                <h:panelGrid id="pg_modal_#{for}" style="height:100%;"  width="#{width}">    
+                    <ui:insert></ui:insert>
+
+                    <f:facet name="footer">
+                        <p:toolbar>
+                            <f:facet name="right">
+
+                                <p:commandButton icon="ui-icon-plus" id="cbNew_#{modalId}"
+                                                 process="@this frm_modal_#{for}"
+                                                 update="frm_modal_#{for} @parent:@parent:@parent:@parent:@parent:#{toolbarId} @parent:@parent:@parent:@parent:@parent:#{listId}"
+                                                 actionListener="#{dataList.actionSave(modalId)}" value="#{labelNew}"
+                                                 rendered="#{renderedNew and activeItem.id == null}">
+                                </p:commandButton>
+
+                                <p:commandButton icon="ui-icon-disk"
+                                                 process="@this frm_modal_#{for}" id="cbSave_#{modalId}"
+                                                 update="frm_modal_#{for} @parent:@parent:@parent:@parent:@parent:#{toolbarId} @parent:@parent:@parent:@parent:@parent:#{listId}"
+                                                 actionListener="#{dataList.actionSave(modalId)}" value="#{labelSave}"
+                                                 rendered="#{renderedSave and activeItem.id != null}">
+                                </p:commandButton>
+
+                                <p:commandButton icon="ui-icon-trash"
+                                                 process="@this frm_modal_#{for}" id="cbDelete_#{modalId}"
+                                                 update="frm_modal_#{for} @parent:@parent:@parent:@parent:@parent:#{toolbarId} @parent:@parent:@parent:@parent:@parent:#{listId}"
+                                                 actionListener="#{dataList.actionDelete(modalId)}"
+                                                 value="#{labelDelete}"
+                                                 rendered="#{renderedDelete and activeItem.id != null}">
+                                    <p:confirm header="Confirmación" message="#{messageDelete}"
+                                               icon="ui-icon-alert" />
+                                </p:commandButton>
+
+
+
+                                <p:commandButton icon="ui-icon-cancel" process="@this"
+                                                 actionListener="#{dataList.actionCancel(modalId)}"
+                                                 update="frm_modal_#{for} @parent:@parent:@parent:@parent:@parent:#{toolbarId} @parent:@parent:@parent:@parent:@parent:#{listId}"
+                                                 id="cbCancel_#{modalId}" rendered="#{renderedCancel}"
+                                                 value="#{labelCancel}">
+                                    <f:attribute name="modalId" value="#{modalId}"></f:attribute>
+                                    <f:actionListener
+                                        type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                                </p:commandButton>
+
+                                <p:commandButton icon="ui-icon-check" process="@this"
+                                                 actionListener="#{dataList.actionProcess}"
+                                                 update="frm_modal_#{for} @parent:@parent:@parent:@parent:@parent:#{toolbarId} @parent:@parent:@parent:@parent:@parent:#{listId}"
+                                                 id="cbProcess_#{modalId}" rendered="#{renderedProcess}"
+                                                 value="#{labelProcess}">
+                                    <f:attribute name="modalId" value="#{modalId}"></f:attribute>
+                                    <f:actionListener
+                                        type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                                </p:commandButton>
+
+                                <p:commandButton icon="ui-icon-transferthick-e-w"
+                                                 process="@this"
+                                                 actionListener="#{dataList.actionGenerate}"
+                                                 update="frm_modal_#{for} @parent:@parent:@parent:@parent:@parent:#{toolbarId} @parent:@parent:@parent:@parent:@parent:#{listId}"
+                                                 id="cbGenerate_#{modalId}" rendered="#{renderedGenerate}"
+                                                 value="#{labelGenerate}">
+                                    <f:attribute name="modalId" value="#{modalId}"></f:attribute>
+                                    <f:actionListener
+                                        type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+                                </p:commandButton>
+
+                                <ui:insert name="extraButtons" />
+
+                            </f:facet>
+                        </p:toolbar>
+                    </f:facet>
+
+                </h:panelGrid>
+
+            </h:form>
+
+
+        </p:dialog>
+
+
+
+    </ae:context>
+
+
+
+
+</ui:composition>
