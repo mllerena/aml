@@ -3,39 +3,26 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" 
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../../resources/layout/template.xhtml"
-                xmlns:ae="http://java.sun.com/jsf/composite/components"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
 
         <h:form id="frmUsuarios">
 
-            
-            
-            <!--
-            <p:dataTable id="dlUsuarios" value="#{adUser.listaUsuario}" var="row"> 
-                    
 
+           <b:panel title="Panel title" >
+               <!--
+                <ae:dataTable id="dlUsuarios" value="#{adUser.listaUsuario}" var="row"> 
                     <p:column headerText="usuario">
-                        
-                        <h:outputText value="#{row} test" />
+                        <h:outputText value="#{row}" />
                     </p:column>
-            </p:dataTable>
-            <p:separator></p:separator>
-            -->
-            
-            <!--
-            <ae:dTable value="#{adUser.listaUsuario}" var="test" > 
-                 
-
-                    <p:column headerText="test">
-                        
-                        <h:outputText value="#{test}" />
-                    </p:column>
-            </ae:dTable>
-            -->
-
+                </ae:dataTable>
+               -->
+            </b:panel>
         </h:form>
 
     </ui:define>

@@ -14,12 +14,12 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <!-- Primefaces Theme -->
-    <!--
+    
     <context-param> 
         <param-name>primefaces.THEME</param-name> 
-        <param-value>modena</param-value> 
+        <param-value>bootstrap</param-value> 
     </context-param> 
-    -->
+    
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -71,8 +71,8 @@
             <web-resource-name>accessAdmin</web-resource-name>
             <description />
             <url-pattern>/home.jsf</url-pattern>
-            <url-pattern>/pages/*</url-pattern>
-            <url-pattern>/pages/administrator/*</url-pattern>
+            <url-pattern>/ui/*</url-pattern>
+            <url-pattern>/ui/admin/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
         </web-resource-collection>

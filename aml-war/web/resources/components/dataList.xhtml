@@ -135,11 +135,11 @@
              
             
 
-            <ae:dataTable id="#{listId}" dataTable="#{data}" totalRecords="#{dataList.rowCountTotal}" 
+            <ae:dataTable id="#{listId}" value="#{data}" 
                           rowKey="#{rowKey}"  selectionMode="multiple"  
                           selection="#{dataList.selectItems}" renderedSelectionMode="false" editable="#{editable}" rowStyleClass="#{row.change? 'rowEdited' : null}" rows="#{rows}" rendered="#{not dataList.enabledSave}" 
                           options="true">
-                
+                 
                 <!--
                 <p:column headerText="" style="width:16px;text-align:center" >
                     <h:panelGroup rendered="#{row.change}" style="padding:0px;spacing:0px;">

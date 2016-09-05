@@ -9,7 +9,7 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 
-
+<!--
     <style type="text/css">
         .ui-paginator-left{
             float: left;
@@ -25,6 +25,7 @@
         }
 
     </style>
+-->
     
     <ae:default var="row" value="#{row}" />
 
@@ -48,15 +49,17 @@
     <ae:default var="rendered" value="#{true}" />
     
     <ae:default var="options" value="#{false}" />
+    
+    <ae:default var="selection" value="#{null}" />
 
-    <p:dataTable id="#{id}" var="row" value="#{dataTable}" widgetVar="wvDat_#{id}"  
+    <p:dataTable id="#{id}" var="row" value="#{value}" widgetVar="wvDat_#{id}"  
                  rowKey="#{rowKey}" paginator="true" 
                  paginatorTemplate="{DetailRecords} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                 paginatorPosition="bottom" rows="#{rows}"  
+                 paginatorPosition="top" rows="#{rows}"  
                  rowsPerPageTemplate="#{rowsPerPageTemplate}"
                  currentPageReportTemplate="Total: {totalRecords} ({currentPage} de {totalPages})"
                  emptyMessage="#{emptyMessage}" selection="#{selection}"
-                 editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}" editMode="cell" rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"> 
+                 editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}"  rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"> 
 
 
         <f:facet name="{DetailRecords}">
@@ -79,8 +82,9 @@
             
         </ui:insert>
 
-        
+        <!--
         <p:column selectionMode="#{selectionMode}" style="width:16px;text-align:center" rendered="#{renderedSelectionMode}"/> 
+        -->
         
         
         <ae:context header="">

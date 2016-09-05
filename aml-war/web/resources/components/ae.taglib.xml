@@ -14,74 +14,6 @@
     </tag>
     
     <tag>
-        <tag-name>dataTable</tag-name>
-        <source>dataTable.xhtml</source>
-        <attribute>
-            <name>id</name>
-            <required>true</required>
-        </attribute>
-        <attribute>
-            <name>dataTable</name>
-            <required>true</required>
-            <type>java.lang.Object</type>
-        </attribute>
-        <attribute>
-            <name>var</name>
-            <required>false</required>
-            <type>java.lang.Object</type>
-        </attribute>
-        <attribute>
-            <name>rowKey</name>
-            <required>true</required>
-        </attribute>
-        <attribute>
-            <name>rendered</name>
-            <required>false</required>
-        </attribute>
-        <attribute>
-            <name>style</name>
-            <required>false</required>
-        </attribute>
-        <attribute>
-            <name>totalRecords</name>
-            <required>false</required>
-        </attribute>
-        
-        <attribute>
-            <name>selectionMode</name>
-            <required>false</required>
-        </attribute>
-        
-        <attribute>
-            <name>selection</name>
-            <required>false</required>
-        </attribute>
-        
-        <attribute>
-            <name>renderedSelectionMode</name>
-            <required>false</required>
-        </attribute>
-        
-        <attribute>
-            <name>editable</name>
-            <required>false</required>
-        </attribute>
-        <attribute>
-            <name>rowStyleClass</name>
-            <required>false</required>
-        </attribute>
-        <attribute>
-            <name>rows</name>
-            <required>false</required>
-        </attribute>
-        
-        <attribute>
-            <name>options</name>
-            <required>false</required>
-        </attribute>
-    </tag>  
-    
-    <tag>
         <tag-name>dataList</tag-name>
         
         <source>dataList.xhtml</source>
@@ -133,11 +65,7 @@
     <tag>
         <tag-name>dataTable</tag-name>
         <description><![CDATA[DataTable is an enhanced version of the standard Datatable that provides built-in solutions to many commons use cases like paging, sorting, selection, lazy loading, filtering and more.]]></description>
-        <component>
-            <component-type>org.primefaces.component.DataTable</component-type>
-            <renderer-type>org.primefaces.component.DataTableRenderer</renderer-type>
-            <handler-class>org.primefaces.component.datatable.DataTableHandler</handler-class>
-        </component>
+        <source>dataTable.xhtml</source>
         <attribute>
             <description><![CDATA[Unique identifier of the component in a namingContainer.]]></description>
             <name>id</name>
@@ -566,6 +494,19 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        
+        <attribute>
+            <name>renderedSelectionMode</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        
+         <attribute>
+            <name>options</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        
     </tag>
         
 
