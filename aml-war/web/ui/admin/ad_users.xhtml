@@ -6,23 +6,26 @@
                 xmlns:ae="http://primefaces.org/aeopensolutions"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:b="http://bootsfaces.net/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
-
+                
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui">
+    
+    <ui:param name="contentTitle" value="Administración de Usuarios" ></ui:param>
+    
     <ui:define name="content">
 
         <h:form id="frmUsuarios">
 
 
-           <b:panel title="Panel title" >
-               <!--
+           
+               
                 <ae:dataTable id="dlUsuarios" value="#{adUser.listaUsuario}" var="row"> 
                     <p:column headerText="usuario">
-                        <h:outputText value="#{row}" />
+                        <h:outputText value="#{row.name}" />
                     </p:column>
                 </ae:dataTable>
-               -->
-            </b:panel>
+               
+            
         </h:form>
 
     </ui:define>

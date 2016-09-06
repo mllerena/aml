@@ -44,7 +44,7 @@ public class LoginController implements Serializable {
 
     @PostConstruct
     public void initialize() {
-        adUser = security.getAdUser();
+        
         //prPeople = prPeopleFacade.findByAdUser(getAdUser());
         setPass1(null);
         setPass2(null);
@@ -87,6 +87,9 @@ public class LoginController implements Serializable {
     }
 
     public AdUser getAdUser() {
+        if( adUser == null ){
+            adUser = security.getAdUser();
+        }
         return adUser;
     }
 

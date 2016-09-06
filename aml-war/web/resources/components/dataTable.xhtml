@@ -2,31 +2,34 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions"
                 xmlns:ae="http://primefaces.org/aeopensolutions"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:o="http://omnifaces.org/ui"
-                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                >
 
 
-<!--
-    <style type="text/css">
-        .ui-paginator-left{
-            float: left;
-            line-height: 20px;
-            vertical-align: middle;
-        }
-
-        .ui-paginator-left > span{
-            display: inline-block;
-            vertical-align: middle;
-            line-height: 1em; /*set line height back to normal*/
-            margin-left: 2px;
-        }
-
-    </style>
--->
+    <!--
+        <style type="text/css">
+            .ui-paginator-left{
+                float: left;
+                line-height: 20px;
+                vertical-align: middle;
+            }
     
+            .ui-paginator-left > span{
+                display: inline-block;
+                vertical-align: middle;
+                line-height: 1em; /*set line height back to normal*/
+                margin-left: 2px;
+            }
+    
+        </style>
+    -->
+
+
+
     <ae:default var="row" value="#{row}" />
 
     <ae:default var="rows" value="10" />
@@ -45,55 +48,80 @@
     <ae:default var="auditable" value="#{true}" />
 
     <ae:default var="renderedSelectionMode" value="true" />
-    
+
     <ae:default var="rendered" value="#{true}" />
-    
+
     <ae:default var="options" value="#{false}" />
-    
+
     <ae:default var="selection" value="#{null}" />
 
-    <p:dataTable id="#{id}" var="row" value="#{value}" widgetVar="wvDat_#{id}"  
-                 rowKey="#{rowKey}" paginator="true" 
-                 paginatorTemplate="{DetailRecords} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+
+
+
+
+    <p:dataTable id="#{id}" var="row" value="#{value}" widgetVar="wvDat_#{id}"  binding="#{component_table}"
+                 rowKey="#{rowKey}" paginator="true"  
+                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                  paginatorPosition="top" rows="#{rows}"  
                  rowsPerPageTemplate="#{rowsPerPageTemplate}"
                  currentPageReportTemplate="Total: {totalRecords} ({currentPage} de {totalPages})"
-                 emptyMessage="#{emptyMessage}" selection="#{selection}"
+                 emptyMessage="#{emptyMessage}" 
                  editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}"  rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"> 
 
 
-        <f:facet name="{DetailRecords}">
-            <span class="ui-corner-all" >
-                <span>
-                    <h:panelGroup layout="span" rendered="#{editable}" >
-                        Total Registros: #{totalRecords}
-                        <!--
-                        <p:spacer width="10"></p:spacer> 
-                        Seleccionados: #{selectedRecords}
-                        <p:spacer width="10"></p:spacer> 
-                        Modificados: #{totalModified}
-                        -->
-                    </h:panelGroup>
-                </span>
-            </span>
+        <f:facet name="header">
+
+            <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix">
+                <div class="ui-toolbar-group-left">
+                    <p:commandButton process="@this" style="margin-left: 0px;text-align: center;" value="Crear"/> 
+                </div>
+                <div class="ui-toolbar-group-right">
+                    
+                    <div class="searchLoader">
+                        <p:graphicImage  name="search-loader.gif" library="images"/>
+                    </div>
+                    
+                    <p:inputText id="globalFilter" style="margin-right: 10px;" class="search" placeholder="Buscar" onkeyup="PF('wvDat_#{id}').filter();"></p:inputText>
+
+
+
+
+
+
+                    <h:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-th" /></h:commandLink>
+                    <p:spacer width="5"></p:spacer>
+                    <h:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-bars" /></h:commandLink>
+                    <p:spacer width="5"></p:spacer>
+                    
+                    <p:commandLink style="font-size: 17px !important;" styleClass="active-nav-button"><h:outputText styleClass="fa fa-table" /></p:commandLink>
+                    <p:spacer width="5"></p:spacer>
+
+
+
+
+
+                </div>
+
+
+
+            </p:outputPanel>
         </f:facet>
 
+        <p:ajax event="filter" global="false" onstart="showSearchLoader();" oncomplete="hideSearchLoader();"/>  
+
         <ui:insert name="events">
-            
+
         </ui:insert>
 
-        <!--
-        <p:column selectionMode="#{selectionMode}" style="width:16px;text-align:center" rendered="#{renderedSelectionMode}"/> 
-        -->
-        
-        
+
+
         <ae:context header="">
             <ui:insert >
-                
+
             </ui:insert>
         </ae:context>
 
-        <p:column sortBy="#{row.created}" headerText="Creación" rendered="#{auditable}" width="130">
+        <p:column sortBy="#{row.created}" headerText="Creación" rendered="#{auditable}" width="170">
             <h:outputText value="#{row.created}">
                 <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" />
             </h:outputText>
@@ -103,7 +131,7 @@
             <h:outputText value="#{row.createdby}" />
         </p:column>
 
-        <p:column sortBy="#{row.updated}" headerText="Actualización" rendered="#{auditable}" width="130">
+        <p:column sortBy="#{row.updated}" headerText="Actualización" rendered="#{auditable}" width="170">
             <h:outputText value="#{row.updated}">
                 <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" />
             </h:outputText>
@@ -112,7 +140,7 @@
         <p:column sortBy="#{row.updatedby}" headerText="Actualizado por" rendered="#{auditable}" width="140">
             <h:outputText value="#{row.updatedby}" />
         </p:column> 
-        
+
         <p:column style="width:32px;text-align: center" rendered="#{options}">
             <ui:insert name="options"/>
         </p:column>

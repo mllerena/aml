@@ -8,4 +8,9 @@
        <resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
    </application>
    -->
+   <application>
+       
+    <resource-handler>org.omnifaces.resourcehandler.UnmappedResourceHandler</resource-handler>
+</application>
+
 </faces-config>

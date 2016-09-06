@@ -3,7 +3,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:p="http://primefaces.org/ui" contentType="text/html">
+        xmlns:p="http://primefaces.org/ui"  contentType="text/html">
 
     <ui:insert name="metadata" />
 
@@ -12,46 +12,47 @@
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-            <title>Open Source AE OpenSolutions Platform</title>
-
-            <!--
-                        <h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
-                        <h:outputStylesheet name="css/animate.css" library="modena-layout" />
-                        <h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
-                        <h:outputStylesheet name="css/ripple-effect.css" library="modena-layout" />
-                        <h:outputStylesheet name="css/perfect-scrollbar.css" library="modena-layout" />
-                        <h:outputStylesheet name="css/font-awesome.css" library="modena-layout" />
-                        <h:outputStylesheet name="css/modena-layout.css" library="modena-layout" />
-                        
+            <title>AE OpenSolutions Platform</title>
+            
+            <h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
             
             
-                        <h:outputScript name="js/ripple-effect.js" library="modena-layout" />
-                        <h:outputScript name="js/perfect-scrollbar.js" library="modena-layout" />
-                        <h:outputScript name="js/layout.js" library="modena-layout" />
-            <h:outputStylesheet name="style.css" library="css" />
-            -->
-
+            <h:outputScript name="pfcrud.js" library="js"></h:outputScript>
 
             <ui:insert name="head" />
 
-            <style>
-                @font-face {font-family: 'Glyphicons Halflings';src: url('../fonts/glyphicons-halflings-regular.eot');src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');}
 
-            </style>
 
         </h:head>
 
-        <h:body class="BlueModena Geometry">
+        <h:body >
 
 
             <p:growl autoUpdate="true" > </p:growl>
 
+            <h:form>
 
+                <p:menubar>
+                    <p:submenu label="Configuración" icon="fa fa-gear">
+                        <p:menuitem value="Usuarios" url="/ui/admin/ad_users.jsf"></p:menuitem>
+                    </p:submenu>
+                    <p:menuitem value="Inicio" url="/home.jsf" icon="fa fa-home"></p:menuitem>
+                    <f:facet name="options">
+                        <p:inputText placeholder="Búsqueda" style="margin-right: 10px;"></p:inputText>
+                        <p:menuButton value="#{login.adUser.name.toUpperCase()}" >
+                            <p:menuitem  value="Cerrar" icon="ui-icon-extlink" actionListener="#{login.logout()}"></p:menuitem>
+                        </p:menuButton>
+                        
+                    </f:facet>
+                </p:menubar>
 
-
+            </h:form>
+            
+            <p:spacer></p:spacer>
+            
             <ui:insert name="content">
             </ui:insert> 
-
+            
 
 
             <!--
