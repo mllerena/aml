@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                >
+
+   <p:dataGrid   id="dg_#{id}"      
+                      var="row" 
+                      value="#{value}"
+                      columns="3" 
+                      emptyMessage="No hay registros"
+                      rowIndexVar="rowIndex"
+                      paginatorAlwaysVisible="true"
+                      layout="grid"
+                      rows="5"   
+                      paginator="true" 
+                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+        
+        <!--
+        <p:ajax event="page" oncomplete="updateGrid();"/>
+        -->
+        <div class="data-grid">
+         
+            <ui:insert name="dataGrid"></ui:insert>
+            
+            
+                </div>
+                
+                
+                
+                
+                
+                
+            
+        </p:dataGrid>
+
+
+</ui:composition>

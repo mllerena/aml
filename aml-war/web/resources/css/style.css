@@ -31,3 +31,13 @@
     display: none; 
     margin-right: 6px;
 }
+
+.data-grid {
+    min-height: 100px !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 1px 1px #6f6f6f !important;
+    padding-top: 15px !important;
+    padding-left: 10px !important;
+    margin-bottom: 3px !important;
+    margin-right: 3px !important;
+}

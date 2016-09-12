@@ -62,7 +62,7 @@ import org.aeopensolutions.model.enums.YesNo;
     @NamedQuery(name = "AdUser.findByBirthday", query = "SELECT a FROM AdUser a WHERE a.birthday = :birthday"),
     @NamedQuery(name = "AdUser.findByFirstname", query = "SELECT a FROM AdUser a WHERE a.firstname = :firstname"),
     @NamedQuery(name = "AdUser.findByLastname", query = "SELECT a FROM AdUser a WHERE a.lastname = :lastname"),
-    @NamedQuery(name = "AdUser.findByUsername", query = "SELECT a FROM AdUser a WHERE a.username = :username and a.isactive = :isactive"),
+    @NamedQuery(name = "AdUser.findByUsername", query = "SELECT a FROM AdUser a WHERE a.username like :username and a.isactive = :isactive"),
     @NamedQuery(name = "AdUser.findByIslocked", query = "SELECT a FROM AdUser a WHERE a.islocked = :islocked")})
 public class AdUser extends AbstractEntityModel implements Serializable {
 
@@ -76,33 +76,7 @@ public class AdUser extends AbstractEntityModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AdUser_seq")
     private BigInteger id;
 
-    @Basic(optional = false)
-    @Column(name = "isactive")
-    @Convert(converter = YesNoConverter.class)
-    @NotNull
-    private YesNo isactive;
-
-    @Basic(optional = false)
-    @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    private Date created;
-
-    @Basic(optional = false)
-    @Column(name = "createdby")
-    @NotNull
-    private String createdby;
-
-    @Basic(optional = false)
-    @Column(name = "updated")
-    @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    private Date updated;
-
-    @Basic(optional = false)
-    @Column(name = "updatedby")
-    @NotNull
-    private String updatedby;
+    
 
     @Basic(optional = false)
     @Column(name = "username")
@@ -184,52 +158,14 @@ public class AdUser extends AbstractEntityModel implements Serializable {
         this.id = id;
     }
 
+    @Override
     public BigInteger getId() {
         return id;
     }
 
+    @Override
     public void setId(BigInteger id) {
         this.id = id;
-    }
-
-    public YesNo getIsactive() {
-        return isactive;
-    }
-
-    public void setIsactive(YesNo isactive) {
-        this.isactive = isactive;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public String getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
-    public String getUpdatedby() {
-        return updatedby;
-    }
-
-    public void setUpdatedby(String updatedby) {
-        this.updatedby = updatedby;
     }
 
     public String getName() {

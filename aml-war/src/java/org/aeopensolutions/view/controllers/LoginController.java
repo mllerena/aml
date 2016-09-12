@@ -75,7 +75,7 @@ public class LoginController implements Serializable {
         
         System.out.println("actualizarUsuario aduser: " + getAdUser());
             try {
-                adUserFacade.save(getAdUser(), getPass1(), getPass2());
+                adUserFacade.save(getAdUser());
             } catch (Exception e) {
                 JsfUtils.messageError(null, e.getMessage(), null);
                 return;

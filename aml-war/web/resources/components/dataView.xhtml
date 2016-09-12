@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                >
+    
+    <h:panelGroup id="pg_cmp_dv_#{id}">
+
+    <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix ui-widget-header">
+        <div class="ui-toolbar-group-left">
+            <p:commandButton process="@this" style="margin-left: 0px;text-align: center;" value="Crear"/> 
+        </div>
+        <div class="ui-toolbar-group-right">
+
+            <div class="searchLoader">
+                <p:graphicImage  name="search-loader.gif" library="images"/>
+            </div>
+
+            <p:inputText id="globalFilter" style="margin-right: 10px;" class="search" placeholder="Buscar" ></p:inputText>
+
+
+
+
+            <ui:repeat value="#{value.viewTypesAvailable}" var="viewType">
+                
+                <p:commandLink style="font-size: 17px !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
+                               update="@parent:@parent:pg_cmp_dv_#{id}">
+                    <f:attribute name="viewType" value="#{viewType}"></f:attribute>
+                    <h:outputText styleClass="#{viewType eq 'TABLE' ? 'fa fa-bars' : viewType eq 'GRID' ? 'fa fa-th' : 'fa fa-table'}" />
+                </p:commandLink>
+                <p:spacer width="5"></p:spacer>
+                
+            </ui:repeat>
+
+            <!--
+            <p:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-th" /></p:commandLink>
+            <p:spacer width="5"></p:spacer>
+            <p:commandLink style="font-size: 17px !important;" styleClass="active-nav-button"><h:outputText styleClass="fa fa-bars" /></p:commandLink>
+            <p:spacer width="5"></p:spacer>
+
+            <p:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-table" /></p:commandLink>
+            <p:spacer width="5"></p:spacer>
+            -->
+
+
+
+
+        </div>
+
+
+
+    </p:outputPanel>
+
+    <p:spacer height="2"></p:spacer>                                                                                                                                                                                                                                             
+
+    <o:methodParam name="method" value="#{value.onRowSelect}" />
+
+    <div style="#{value.viewTypeActive eq 'TABLE' ? 'display : block;' : 'display : none;'}">
+
+        <ae:dataTable id="dt_#{id}" value="#{value.value}" var="row" selectionMode="single" selection="#{value.selectedItem}" rowKey="#{row.id}"> 
+
+
+            <ui:insert name="dataTable"></ui:insert>
+            
+            <ui:define name="events">
+                <p:ajax event="rowSelect" listener="#{method}"  update="pg_cmp_dv_#{id}"/>    
+            </ui:define>
+            
+            
+
+        </ae:dataTable>
+
+    </div>
+
+
+    <div style="#{value.viewTypeActive eq 'GRID' ? 'display : block;' : 'display : none;'}">
+        <ae:dataGrid   id="dg_#{id}"
+                       value="#{value.value}"
+                       >
+
+            <!--
+            <p:ajax event="page" oncomplete="updateGrid();"/>
+            -->
+
+
+            <ui:insert name="dataGrid"></ui:insert>
+
+
+
+
+
+
+
+
+
+
+        </ae:dataGrid>
+
+    </div>
+    
+    <div style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}">
+        
+        <ui:insert name="dataRow"></ui:insert>
+        
+    </div>
+    
+    
+    
+    </h:panelGroup>
+
+</ui:composition>

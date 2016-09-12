@@ -2,10 +2,6 @@ package org.aeopensolutions.model.exceptions;
 
 import javax.ejb.ApplicationException;
 
-/**
- * 
- * @author JNK
- */ 
 @ApplicationException(rollback = true)
 public class ExecuteRollbackException extends Exception {
 

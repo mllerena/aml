@@ -57,6 +57,7 @@ public class AdUserFacade extends AbstractFacade<AdUser> {
         super(AdUser.class);
     }
 
+    /*
     public List<AdUser> find(AdUser filter) {
 
         System.out.println("filter: " + filter);
@@ -135,13 +136,22 @@ public class AdUserFacade extends AbstractFacade<AdUser> {
         return result;
 
     }
+    */
 
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+   
+    public void validateExistence(AdUser user) throws ExistException {
+            AdUser temp = findByUsername(user.getUsername());
+            if (temp != null) {
+                throw new ExistException();
+            }
+    }
+    
+     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public AdUser findByUsername(String username) {
         List<AdUser> result = null;
         try {
             Query query = em.createNamedQuery("AdUser.findByUsername");
-            query.setParameter("username", username);
+            query.setParameter("username", "%"+username+"%");
             query.setParameter("isactive", YesNo.SI);
             result = query.getResultList();
         } catch (Exception e) {
@@ -151,25 +161,10 @@ public class AdUserFacade extends AbstractFacade<AdUser> {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void save(AdUser user, String pass1, String pass2) throws ExecuteRollbackException {
+    public void save(AdUser user) throws ExecuteRollbackException {
         try {
-            if (user == null) {
-                throw new ProcessOperationException("El parámetro usuario no puede ser null.");
-            }
-
-            if (!StringsUtils.isEmptyTrim(pass1)
-                    || !StringsUtils.isEmptyTrim(pass2)) {
-                // validar pass1
-                if (StringsUtils.isEmptyTrim(pass1)) {
-                    throw new ProcessOperationException("La contraseñaa está vacía.");
-                }
-                // validar pass2
-                if (!StringsUtils.eqTrim_NotNullOrEmpty(pass1, pass2)) {
-                    throw new ProcessOperationException("Contraseña no concuerda.");
-                }
-            }
             
-            String password = DigestUtils.md5Hex(pass1.trim());
+            String password = DigestUtils.md5Hex(user.getPassword().trim());
             user.setPassword(password);
             
             user.setUsername(user.getUsername().toUpperCase());
@@ -177,15 +172,14 @@ public class AdUserFacade extends AbstractFacade<AdUser> {
             if (user.getId() == null) {
                 user.setName(user.getUsername());
                 user.setIslocked(new Character('N'));
-                validarExistencia(user);
+                validateExistence(user);
                 this.create(user);
             } else {
-                validarExistenciaActualizar(user);
+                validateExistence(user);
                 this.edit(user);
             }
 
-        } catch (ProcessOperationException e) {
-            throw new ExecuteRollbackException(e.getMessage());
+       
         } catch (ExistException e) {
             throw new ExecuteRollbackException("El usuario " + user.getUsername() + " ya existe.");
         } catch (Exception e) {
@@ -203,7 +197,7 @@ public class AdUserFacade extends AbstractFacade<AdUser> {
 
             user.setIsactive(YesNo.NO);
 
-            validarExistenciaActualizar(user);
+            validateExistence(user);
             this.edit(user);
 
         } catch (ProcessOperationException e) {
@@ -214,48 +208,6 @@ public class AdUserFacade extends AbstractFacade<AdUser> {
         }
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void delete(List<AdUser> adUserList) throws ExecuteRollbackException {
-        try {
-            if (adUserList == null) {
-                throw new ProcessOperationException("El parámetro adUserList no puede ser null.");
-            }
-
-            for (AdUser adUser : adUserList) {
-                this.delete(adUser);
-            }
-
-        } catch (ProcessOperationException e) {
-            throw new ExecuteRollbackException(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ExecuteRollbackException("Error al guardar los registros!");
-        }
-    }
-
-    // =============================================================
-    // METODOS VALIDACIONES 
-    // =============================================================
-    public void validarExistencia(AdUser user) throws ExistException {
-        try {
-            AdUser temp = findByUsername(user.getUsername());
-            if (temp != null) {
-                throw new ExistException();
-            }
-        } catch (ExistException e) {
-            throw new ExistException(e);
-        }
-    }
-
-    public void validarExistenciaActualizar(AdUser user) throws ExistException {
-        try {
-            AdUser usuarioWithNotChange = find(user.getId());
-            if (!usuarioWithNotChange.getUsername().trim().equals(user.getUsername().trim())) {
-                validarExistencia(user);
-            }
-        } catch (ExistException e) {
-            throw new ExistException(e);
-        }
-    }
+   
 
 }

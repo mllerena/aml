@@ -66,53 +66,18 @@
                  rowsPerPageTemplate="#{rowsPerPageTemplate}"
                  currentPageReportTemplate="Total: {totalRecords} ({currentPage} de {totalPages})"
                  emptyMessage="#{emptyMessage}" 
-                 editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}"  rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"> 
+                 editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}"  rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"
+                 selectionMode="#{selectionMode}" selection="#{selection}"> 
 
 
-        <f:facet name="header">
-
-            <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix">
-                <div class="ui-toolbar-group-left">
-                    <p:commandButton process="@this" style="margin-left: 0px;text-align: center;" value="Crear"/> 
-                </div>
-                <div class="ui-toolbar-group-right">
-                    
-                    <div class="searchLoader">
-                        <p:graphicImage  name="search-loader.gif" library="images"/>
-                    </div>
-                    
-                    <p:inputText id="globalFilter" style="margin-right: 10px;" class="search" placeholder="Buscar" onkeyup="PF('wvDat_#{id}').filter();"></p:inputText>
-
-
-
-
-
-
-                    <h:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-th" /></h:commandLink>
-                    <p:spacer width="5"></p:spacer>
-                    <h:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-bars" /></h:commandLink>
-                    <p:spacer width="5"></p:spacer>
-                    
-                    <p:commandLink style="font-size: 17px !important;" styleClass="active-nav-button"><h:outputText styleClass="fa fa-table" /></p:commandLink>
-                    <p:spacer width="5"></p:spacer>
-
-
-
-
-
-                </div>
-
-
-
-            </p:outputPanel>
-        </f:facet>
 
         <p:ajax event="filter" global="false" onstart="showSearchLoader();" oncomplete="hideSearchLoader();"/>  
 
         <ui:insert name="events">
 
         </ui:insert>
-
+        
+          
 
 
         <ae:context header="">

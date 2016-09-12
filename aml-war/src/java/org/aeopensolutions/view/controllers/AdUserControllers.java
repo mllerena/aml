@@ -10,16 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.inject.Inject;
 import org.aeopensolutions.model.ejb.facades.AdRoleFacade;
 import org.aeopensolutions.model.ejb.facades.AdUserFacade;
-import org.aeopensolutions.model.ejb.facades.AdUserRolesFacade;
 import org.aeopensolutions.model.entities.AdRole;
 import org.aeopensolutions.model.entities.AdUser;
-import org.aeopensolutions.model.entities.AdUserRoles;
-import org.aeopensolutions.view.components.DataList;
+import org.aeopensolutions.view.components.DataTable;
+import org.aeopensolutions.view.components.DataView;
+import org.aeopensolutions.view.components.DataViewType;
 import org.aeopensolutions.view.utils.JsfUtils;
 
 /**
@@ -27,7 +28,7 @@ import org.aeopensolutions.view.utils.JsfUtils;
  * @author Usuario
  */
 @ManagedBean(name = "adUser")
-@ViewScoped
+@SessionScoped
 public class AdUserControllers implements Serializable {
 
     @Inject
@@ -37,40 +38,48 @@ public class AdUserControllers implements Serializable {
     private String pass2;
 
     @Inject
-    private AdUserRolesFacade adUserRolesFacade;
-
-    @Inject
     private AdRoleFacade adRoleFacade;
-    
-    private List<AdUser> listaUsuario;
 
     @PostConstruct
     public void initialize() {
         listaUsuarios.load();
-        listaUsuario = listaUsuarios.getDataTable();
+    }
+    
+    private AdUser activeItem;
+
+    public AdUser getActiveItem() {
+        if( activeItem == null ){
+            setActiveItem(getListaUsuarios().getSelectedItem());
+        }
+        return activeItem;
     }
 
-    public List<AdUser> getListaUsuario() {
-        return listaUsuario;
-    }
-
-    public void setListaUsuario(List<AdUser> listaUsuario) {
-        this.listaUsuario = listaUsuario;
+    public void setActiveItem(AdUser activeItem) {
+        this.activeItem = activeItem;
     }
     
     
+    
 
-    private DataList<AdUser> listaUsuarios = new DataList<AdUser>() {
-        @Override
-        protected void initialize() {
-            System.out.println("initialize DataList AdUser");
+    private DataView<AdUser> listaUsuarios = new DataView<AdUser>() {
+        
+        
+         @Override
+        public List<DataViewType> viewTypes() { 
+            List<DataViewType> list =  new ArrayList<>();
+            list.add(DataViewType.TABLE);
+            list.add(DataViewType.GRID);
+            list.add(DataViewType.ROW);
+            return list;
         }
 
         @Override
-        public List<AdUser> loadDataList() {
-            //entidad para filtrar
-            //AdUser user = new AdUser();
-            //user.setIsactive(YesNo.SI);
+        protected void initialize() {
+            System.out.println("initialize DataView AdUser");
+        }
+
+        @Override
+        public List<AdUser> findAll() {
             return adUserFacade.findAll();
         }
 
@@ -81,44 +90,13 @@ public class AdUserControllers implements Serializable {
             setPass2(null);
             return new AdUser();
         }
-        
-        @Override
-        protected void createLast() {
-            listaUsuarioRoles.load();
-            UIComponent foundComponent = JsfUtils.getUIComponentOfId(JsfUtils.getCurrentContext().getViewRoot(),"dlUsuarioRoles");
-            JsfUtils.update(foundComponent.getClientId());
-        }
-
-
-        @Override
-        protected AdUser edit(AdUser item) {
-            System.out.println("edit aduser: " + item);
-            //setPass1(item.getPassword());
-            //setPass2(item.getPassword());
-            setPass1(null);
-            setPass2(null);
-            
-            //JsfUtils.update("frmUsuarios:dlUsuarioRoles");
-            
-            listaUsuarioRoles.load();
-            
-            
-            
-            return item;
-        }
-        
-        @Override
-        protected AdUser editLast(AdUser item) {
-             UIComponent foundComponent = JsfUtils.getUIComponentOfId(JsfUtils.getCurrentContext().getViewRoot(),"dlUsuarioRoles");
-            JsfUtils.update(foundComponent.getClientId());
-            return item;
-        }
 
         @Override
         protected AdUser save(AdUser item) {
             System.out.println("save aduser: " + item);
             try {
-                adUserFacade.save(item, getPass1(), getPass2());
+                item.setPassword(getPass1());
+                adUserFacade.save(item);
             } catch (Exception e) {
                 JsfUtils.messageError(null, e.getMessage(), null);
                 return null;
@@ -128,115 +106,80 @@ public class AdUserControllers implements Serializable {
 
             return item;
         }
-        
-         @Override
-        protected AdUser saveLast(AdUser item) {
-            UIComponent foundComponent = JsfUtils.getUIComponentOfId(JsfUtils.getCurrentContext().getViewRoot(),"dlUsuarioRoles");
-            JsfUtils.update(foundComponent.getClientId());
-            return item; 
-        }
 
-        
-
-        @Override
-        protected void delete(List<AdUser> items) {
-            System.out.println("delete aduser: " + items);
-            try {
-                adUserFacade.delete(items);
-            } catch (Exception e) {
-                JsfUtils.messageError(null, e.getMessage(), null);
-                return;
-            }
-
-            JsfUtils.messageInfo(null, "Usuario eliminado correctamente.", null);
-        }
-        
-        @Override
-        protected void deleteLast(List<AdUser> items) {
-            UIComponent foundComponent = JsfUtils.getUIComponentOfId(JsfUtils.getCurrentContext().getViewRoot(),"dlUsuarioRoles");
-            JsfUtils.update(foundComponent.getClientId());
-        }
-
-        @Override
-        protected void cancel() {
-        }
-        
-        @Override
-        protected void cancelLast() {
-            UIComponent foundComponent = JsfUtils.getUIComponentOfId(JsfUtils.getCurrentContext().getViewRoot(),"dlUsuarioRoles");
-            JsfUtils.update(foundComponent.getClientId());
-        }
-        
-        
+       
 
     };
 
-    public DataList<AdUser> getListaUsuarios() {
+    public DataView<AdUser> getListaUsuarios() {
         return listaUsuarios;
     }
 
-    private DataList<AdUserRoles> listaUsuarioRoles = new DataList<AdUserRoles>() {
-        @Override
-        protected void initialize() {
-            System.out.println("initialize DataList AdUserRoles");
-        }
-
-        @Override
-        public List<AdUserRoles> loadDataList() {
-            return adUserRolesFacade.findByAdUser(listaUsuarios.getActiveItem());
-        }
-
-        @Override
-        protected AdUserRoles create() {
-            System.out.println("create AdUserRoles");
-            return new AdUserRoles();
-        }
-
-        @Override
-        protected AdUserRoles edit(AdUserRoles item) {
-            System.out.println("edit AdUserRoles: " + item);
-            return item;
-        }
-
-        @Override
-        protected AdUserRoles save(AdUserRoles item) {
-            System.out.println("save AdUserRoles: " + item);
-            try {
-                adUserRolesFacade.save(item, listaUsuarios.getActiveItem());
-            } catch (Exception e) {
-                JsfUtils.messageError(null, e.getMessage(), null);
-                return null;
-            }
-
-            JsfUtils.messageInfo(null, "Rol asignado correctamente.", null);
-
-            return item;
-        }
-
-        @Override
-        protected void delete(List<AdUserRoles> items) {
-            System.out.println("delete AdUserRoles: " + items);
-            try {
-                adUserRolesFacade.delete(items);
-            } catch (Exception e) {
-                JsfUtils.messageError(null, e.getMessage(), null);
-                return;
-            }
-
-            JsfUtils.messageInfo(null, "Rol eliminado correctamente.", null);
-        }
-
-        @Override
-        protected void cancel() {
-            System.out.println("cancel AdUserRoles");
-        }
-
-    };
-
-    public DataList<AdUserRoles> getListaUsuarioRoles() {
-        return listaUsuarioRoles;
+    public void setListaUsuarios(DataView<AdUser> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
     }
 
+//    private DataList<AdUserRoles> listaUsuarioRoles = new DataList<AdUserRoles>() {
+//        @Override
+//        protected void initialize() {
+//            System.out.println("initialize DataList AdUserRoles");
+//        }
+//
+//        @Override
+//        public List<AdUserRoles> loadDataList() {
+//            return adUserRolesFacade.findByAdUser(listaUsuarios.getActiveItem());
+//        }
+//
+//        @Override
+//        protected AdUserRoles create() {
+//            System.out.println("create AdUserRoles");
+//            return new AdUserRoles();
+//        }
+//
+//        @Override
+//        protected AdUserRoles edit(AdUserRoles item) {
+//            System.out.println("edit AdUserRoles: " + item);
+//            return item;
+//        }
+//
+//        @Override
+//        protected AdUserRoles save(AdUserRoles item) {
+//            System.out.println("save AdUserRoles: " + item);
+//            try {
+//                adUserRolesFacade.save(item, listaUsuarios.getActiveItem());
+//            } catch (Exception e) {
+//                JsfUtils.messageError(null, e.getMessage(), null);
+//                return null;
+//            }
+//
+//            JsfUtils.messageInfo(null, "Rol asignado correctamente.", null);
+//
+//            return item;
+//        }
+//
+//        @Override
+//        protected void delete(List<AdUserRoles> items) {
+//            System.out.println("delete AdUserRoles: " + items);
+//            try {
+//                adUserRolesFacade.delete(items);
+//            } catch (Exception e) {
+//                JsfUtils.messageError(null, e.getMessage(), null);
+//                return;
+//            }
+//
+//            JsfUtils.messageInfo(null, "Rol eliminado correctamente.", null);
+//        }
+//
+//        @Override
+//        protected void cancel() {
+//            System.out.println("cancel AdUserRoles");
+//        }
+//
+//    };
+//
+//    public DataList<AdUserRoles> getListaUsuarioRoles() {
+//        return listaUsuarioRoles;
+//    }
     public List<AdRole> completeRol(String query) {
 
         System.out.println("query: " + query);

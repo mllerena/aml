@@ -2,10 +2,17 @@ package org.aeopensolutions.model.entities;
 
 import java.math.BigInteger;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Convert;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import org.aeopensolutions.model.converters.YesNoConverter;
 
 import org.aeopensolutions.model.enums.YesNo;
 import org.aeopensolutions.model.listeners.EntityModelListener;
@@ -18,25 +25,75 @@ public abstract class AbstractEntityModel {
 
     public abstract void setId(BigInteger id);
 
-    public abstract YesNo getIsactive();
+    @Basic(optional = false)
+    @Column(name = "isactive")
+    @Convert(converter = YesNoConverter.class)
+    @NotNull
+    private YesNo isactive;
 
-    public abstract void setIsactive(YesNo isactive); 
+    @Basic(optional = false)
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    private Date created;
 
-    public abstract Date getCreated();
+    @Basic(optional = false)
+    @Column(name = "createdby")
+    @NotNull
+    private String createdby;
 
-    public abstract void setCreated(Date created);
+    @Basic(optional = false)
+    @Column(name = "updated")
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    private Date updated;
 
-    public abstract String getCreatedby();
+    @Basic(optional = false)
+    @Column(name = "updatedby")
+    @NotNull
+    private String updatedby;
 
-    public abstract void setCreatedby(String createdby);
+    public YesNo getIsactive() {
+        return isactive;
+    }
 
-    public abstract Date getUpdated();
+    public void setIsactive(YesNo isactive) {
+        this.isactive = isactive;
+    }
 
-    public abstract void setUpdated(Date updated);
+    public Date getCreated() {
+        return created;
+    }
 
-    public abstract String getUpdatedby();
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
-    public abstract void setUpdatedby(String updatedby);
+    public String getCreatedby() {
+        return createdby;
+    }
+
+    public void setCreatedby(String createdby) {
+        this.createdby = createdby;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public String getUpdatedby() {
+        return updatedby;
+    }
+
+    public void setUpdatedby(String updatedby) {
+        this.updatedby = updatedby;
+    }
+    
+    
 
     @Transient
     private boolean change;
