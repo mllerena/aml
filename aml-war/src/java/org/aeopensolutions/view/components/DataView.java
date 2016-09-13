@@ -202,6 +202,15 @@ public abstract class DataView<E extends AbstractEntityModel> {
         setEnabledDelete(true);
     }
     
+    public void onRowGridSelect(ActionEvent action) {
+        E selected = (E) action.getComponent().getAttributes().get("rowGrid");
+        setSelectedItem(selected);
+        
+        setViewTypeActive(DataViewType.ROW);
+        setEnabledEdit(true);
+        setEnabledDelete(true);
+    }
+    
     public final void actionCreate(ActionEvent action) {
         System.out.println("actionCreate selectedItem: " + action);
         setSelectedItem(create());

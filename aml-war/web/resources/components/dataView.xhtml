@@ -14,17 +14,17 @@
         <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix ui-widget-header">
             <div class="ui-toolbar-group-left">
                 <p:commandButton process="@this" rendered="#{value.enabledCreate}" value="Crear" icon="fa fa-plus" actionListener="#{value.actionCreate}" update="@parent:@parent"/> 
-                
+
                 <p:commandButton process="@this" rendered="#{value.enabledSave}" value="Guardar" icon="fa fa-save" actionListener="#{value.actionSave}" update="@parent:@parent"/> 
-                
-                
-                
+
+
+
                 <p:commandButton process="@this" rendered="#{value.enabledEdit}" value="Editar" icon="fa fa-edit" actionListener="#{value.actionEdit}" update="@parent:@parent"/> 
-                
+
                 <p:commandButton process="@this" rendered="#{value.enabledDelete}" value="Eliminar" icon="fa fa-remove" actionListener="#{value.actionDelete}" update="@parent:@parent"/> 
-                
+
                 <p:commandButton process="@this" rendered="#{value.enabledCancel}" value="Descartar" icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent"/> 
-                
+
             </div>
             <div class="ui-toolbar-group-right">
 
@@ -69,7 +69,7 @@
 
         <p:spacer height="2"></p:spacer>                                                                                                                                                                                                                                             
 
-        <o:methodParam name="method" value="#{value.onRowSelect}" />
+        <o:methodParam name="methodRowSelect" value="#{value.onRowSelect}" />
 
         <h:panelGroup id="pg_dataTable_#{id}" layout="block" style="#{value.viewTypeActive eq 'TABLE' ? 'display : block;' : 'display : none;'}">
 
@@ -80,7 +80,7 @@
                 <ui:insert name="dataTable"></ui:insert>
 
                 <ui:define name="events">
-                    <p:ajax event="rowSelect" listener="#{method}"  update="@parent:@parent:@parent"/>    
+                    <p:ajax event="rowSelect" listener="#{methodRowSelect}"  update="@parent:@parent:@parent"/>    
                 </ui:define>
 
 
@@ -88,6 +88,8 @@
             </ae:dataTable>
 
         </h:panelGroup>
+
+        <o:methodParam name="methodRowGridSelect" value="#{value.onRowGridSelect}" />
 
         <h:panelGroup id="pg_dataGrid_#{id}" layout="block" style="#{value.viewTypeActive eq 'GRID' ? 'display : block;' : 'display : none;'}">
 
@@ -98,10 +100,19 @@
                 <!--
                 <p:ajax event="page" oncomplete="updateGrid();"/>
                 -->
+                <ui:define name="dataGrid">
+
+                    <p:commandLink class="data-grid-link"  actionListener="#{methodRowGridSelect}" update="@parent:@parent:@parent">
+                        <f:attribute name="rowGrid" value="#{row}"></f:attribute>
+                        <div class="data-grid">
 
 
-                <ui:insert name="dataGrid"></ui:insert>
+                            <ui:insert name="dataGrid"></ui:insert>
 
+
+                        </div>
+                    </p:commandLink>
+                </ui:define>
 
 
 
