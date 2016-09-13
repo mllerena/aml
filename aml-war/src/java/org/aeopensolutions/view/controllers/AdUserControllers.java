@@ -60,12 +60,24 @@ public class AdUserControllers implements Serializable {
 
     private DataView<AdUser> listaUsuarios = new DataView<AdUser>() {
         
+        @Override
+        protected List<AdUser> filterGrid(String searchKey,List<AdUser> filteredValues) {
+            List<AdUser> results = new ArrayList<>();
+            for (AdUser user : filteredValues) {
+                    if (user.getName().toUpperCase().contains(searchKey.toUpperCase()) ) {
+                        results.add(user);
+                    }
+                }
+            System.out.println("filtrado: "+results);
+            return results;
+        }
+        
         
          @Override
         public List<DataViewType> viewTypes() { 
             List<DataViewType> list =  new ArrayList<>();
             list.add(DataViewType.TABLE);
-            list.add(DataViewType.GRID);
+            //list.add(DataViewType.GRID);
             list.add(DataViewType.ROW);
             return list;
         }

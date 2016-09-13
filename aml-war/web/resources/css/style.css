@@ -5,7 +5,7 @@
 .search {
     width:340px;
     height:25px !important;
-    border:1px solid #f6f6f6;
+    border:1px solid #d6d6d6;
     box-shadow:none;
     background:#f6f6f6 url("#{resource['images/search-icon.png']}")  no-repeat 5px 3px !important;
     padding:0 5px 0 25px !important;
@@ -17,7 +17,7 @@
 }
 
 .active-nav-button{
-    
+
     padding: 1px 5px !important;
     background-color: #999 !important;
     color: #fff  !important;
@@ -46,4 +46,44 @@
     text-decoration: none !important;
     cursor: pointer !important;
     background: transparent !important;
+}
+
+.ui-datagrid-content {
+    padding-left: 10px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    padding-right: 7px !important;
+    background-color: #939393 !important;
+}
+
+.ui-datatable .ui-column-filter {
+    display: none !important;
+}
+
+.ui-datatable .ui-datatable-header {
+    display: none;
+}
+
+.ui-module-row{
+    background-color: #fff !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+    background-image: -webkit-linear-gradient(top, #fff, #eee);
+    background-image: -moz-linear-gradient(top, #fff, #eee);
+    background-image: -ms-linear-gradient(top, #fff, #eee);
+    background-image: -o-linear-gradient(top, #fff, #eee);
+    background-image: linear-gradient(top, #fff, #eee);  
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    padding: 0px 6px 6px 6px !important;
+    width: 1172px;
+    margin-bottom: 15px;
+    margin-right: auto;
+    margin-top: 18px;
+    margin-left: auto;    
+}
+
+.ui-module-wrapper {
+    background-color: #73ade7;
+    width: 100%;
 }

@@ -38,6 +38,10 @@ public abstract class DataView<E extends AbstractEntityModel> {
     private List<DataViewType> viewTypesAvailable;
     
     private DataViewType viewTypeActive;
+    
+    protected List<E> filteredValues;
+    
+    private String searchKey;
 
     public DataView() {
         init();
@@ -100,7 +104,56 @@ public abstract class DataView<E extends AbstractEntityModel> {
         setEnabledDelete(false);
         setEnabledCancel(false);
         
+        load();
         
+        
+    }
+
+    public List<E> getFilteredValues() {
+        return filteredValues;
+    }
+
+    public void setFilteredValues(List<E> filteredValues) {
+        this.filteredValues = filteredValues;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+    
+    public void searchByName() {
+        
+        System.out.println("searchByName: "+searchKey);
+
+        if (value != null && filteredValues != null) {
+            if (searchKey != null && !searchKey.isEmpty()) {
+
+                value = new ArrayList<>();
+                
+                System.out.println("searchByName filteredValues: "+filteredValues);
+                value = filterGrid(searchKey,filteredValues);
+                
+                /*
+                for (E part : filteredPartners) {
+                    if (StringUtils.containsIgnoreCase(part.getName(), searchKey)) {
+                        partners.add(part);
+                    }
+                }*/
+                
+            } else if (searchKey != null && searchKey.isEmpty()) {
+                System.out.println("searchByName searchKey vacio: "+searchKey);
+                value = new ArrayList<>();
+                value.addAll(filteredValues);
+            }
+        }
+    }
+    
+    protected List<E> filterGrid(String searchKey,List<E> filteredValues) {
+        throw new UnsupportedOperationException();
     }
 
     public boolean isEnabledRefresh() {
@@ -179,6 +232,7 @@ public abstract class DataView<E extends AbstractEntityModel> {
     
     public void load() {
         setValue(findAll());
+        setFilteredValues(getValue());
     }
 
     public int getRowCountTotal() {

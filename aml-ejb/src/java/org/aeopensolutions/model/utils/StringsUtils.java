@@ -4,6 +4,9 @@
  */
 package org.aeopensolutions.model.utils; 
  
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 /**
  *
  * @author JNK
@@ -70,6 +73,26 @@ public class StringsUtils {
     	return result;
     	
     }
+    
+     public static String numeroFormateado(Double valor) {
+        if (valor != null) {
+            String pattern = "###0.00#";
+            DecimalFormat df = new DecimalFormat(pattern, DecimalFormatSymbols.getInstance());
+            DecimalFormatSymbols dfs = DecimalFormatSymbols.getInstance();
+            dfs.setDecimalSeparator('.');
+            df.setDecimalFormatSymbols(dfs);
+            return df.format(valor);
+        }
+        return null;
+    }    
+     
+     
+         
+    
+   
+    
+    
+
     
     
     

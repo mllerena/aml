@@ -45,7 +45,7 @@
 
     <ae:default var="editingRow" value="#{false}" />
 
-    <ae:default var="auditable" value="#{true}" />
+    <ae:default var="auditable" value="#{false}" />
 
     <ae:default var="renderedSelectionMode" value="true" />
 
@@ -59,18 +59,16 @@
 
 
 
-    <p:dataTable id="#{id}" var="row" value="#{value}" widgetVar="wvDat_#{id}"  binding="#{component_table}"
+    <p:dataTable id="#{id}" var="row" value="#{value}" widgetVar="#{widgetVar}"  
                  rowKey="#{rowKey}" paginator="true"  
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                   paginatorAlwaysVisible="true" rows="#{rows}"  
                  rowsPerPageTemplate="#{rowsPerPageTemplate}"
-                 currentPageReportTemplate="Total: {totalRecords} ({currentPage} de {totalPages})"
                  emptyMessage="#{emptyMessage}" 
                  editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}"  rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"
-                 selectionMode="#{selectionMode}" selection="#{selection}"> 
+                 selectionMode="#{selectionMode}" selection="#{selection}" filteredValue="#{filteredValue}"> 
 
-
-
+        
         <p:ajax event="filter" global="false" onstart="showSearchLoader();" oncomplete="hideSearchLoader();"/>  
 
         <ui:insert name="events">
@@ -86,23 +84,24 @@
             </ui:insert>
         </ae:context>
 
-        <p:column sortBy="#{row.created}" headerText="Creación" rendered="#{auditable}" width="170">
+        
+        <p:column sortBy="#{row.created}" filterBy="#{row.created}" headerText="Creación" rendered="#{auditable}" width="170">
             <h:outputText value="#{row.created}">
                 <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" />
             </h:outputText>
         </p:column>
 
-        <p:column sortBy="#{row.createdby}" headerText="Creado por" rendered="#{auditable}" width="110">
+        <p:column sortBy="#{row.createdby}" filterBy="#{row.createdby}" headerText="Creado por" rendered="#{auditable}" width="110">
             <h:outputText value="#{row.createdby}" />
         </p:column>
 
-        <p:column sortBy="#{row.updated}" headerText="Actualización" rendered="#{auditable}" width="170">
+        <p:column sortBy="#{row.updated}" filterBy="#{row.updated}" headerText="Actualización" rendered="#{auditable}" width="170">
             <h:outputText value="#{row.updated}">
                 <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" />
             </h:outputText>
         </p:column>
 
-        <p:column sortBy="#{row.updatedby}" headerText="Actualizado por" rendered="#{auditable}" width="140">
+        <p:column sortBy="#{row.updatedby}" filterBy="#{row.updatedby}" headerText="Actualizado por" rendered="#{auditable}" width="140">
             <h:outputText value="#{row.updatedby}" />
         </p:column> 
 

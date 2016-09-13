@@ -20,7 +20,7 @@
             <ae:dataView id="dvUsuarios" value="#{adUser.listaUsuarios}">
 
                 <ui:define name="dataTable">
-                    <p:column headerText="Usuario">
+                    <p:column headerText="Usuario" filterBy="#{row.name}" > 
                         <h:outputText value="#{row.name}" />
                     </p:column>
                 </ui:define>

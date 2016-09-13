@@ -31,13 +31,27 @@
                 <div class="searchLoader">
                     <p:graphicImage  name="search-loader.gif" library="images"/>
                 </div>
+                
+                  
+                
+                  
+                
+                  
+                
+                <o:resolveComponent name="tableComponent" for="dt_#{id}" />
+                
+                <p:inputText rendered="#{value.viewTypeActive eq 'TABLE'}" id="seachDataTable_#{id}"  onkeyup="$(document.getElementById('#{tableComponent.clientId}:globalFilter')).val(this.value);PF('#{tableComponent.widgetVar}').filter();" style="margin-right: 10px;" class="search" placeholder="Buscar"/>
+                
+                <p:inputText value="#{value.searchKey}" rendered="#{value.viewTypeActive eq 'GRID'}" id="seachDataGrid_#{id}"  style="margin-right: 10px;" class="search" placeholder="Buscar">
+                    <p:ajax  global="false" delay="500"  event="keyup" listener="#{value.searchByName}" process="@this" 
+                             update="@parent:@parent:@parent" onstart="showSearchLoader();" oncomplete="hideSearchLoader();"/>
+                </p:inputText>
+                
+                <o:moveComponent for="dt_#{id}" destination="FACET" facet="header" id="mcDataTable">
+                    <h:inputHidden id="globalFilter" />
+                </o:moveComponent>
 
-                <p:inputText id="globalFilter" style="margin-right: 10px;" class="search" placeholder="Buscar" ></p:inputText>
-
-
-
-
-                <ui:repeat value="#{value.viewTypesAvailable}" var="viewType">
+                <ui:repeat value="#{value.viewTypesAvailable}" var="viewType" id="rViewType">
 
                     <p:commandLink style="font-size: 17px !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
                                    update="@parent:@parent:pg_cmp_dv_#{id}">
@@ -47,17 +61,6 @@
                     <p:spacer width="5"></p:spacer>
 
                 </ui:repeat>
-
-                <!--
-                <p:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-th" /></p:commandLink>
-                <p:spacer width="5"></p:spacer>
-                <p:commandLink style="font-size: 17px !important;" styleClass="active-nav-button"><h:outputText styleClass="fa fa-bars" /></p:commandLink>
-                <p:spacer width="5"></p:spacer>
-    
-                <p:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-table" /></p:commandLink>
-                <p:spacer width="5"></p:spacer>
-                -->
-
 
 
 
@@ -74,7 +77,7 @@
         <h:panelGroup id="pg_dataTable_#{id}" layout="block" style="#{value.viewTypeActive eq 'TABLE' ? 'display : block;' : 'display : none;'}">
 
 
-            <ae:dataTable id="dt_#{id}" value="#{value.value}" var="row" selectionMode="single" selection="#{value.selectedItem}" rowKey="#{row.id}"> 
+            <ae:dataTable id="dt_#{id}" value="#{value.value}" var="row" selectionMode="single" selection="#{value.selectedItem}" rowKey="#{row.id}" widgetVar="wv_dt_#{id}" filteredValue="#{value.filteredValues}"> 
 
 
                 <ui:insert name="dataTable"></ui:insert>
@@ -88,6 +91,8 @@
             </ae:dataTable>
 
         </h:panelGroup>
+        
+      
 
         <o:methodParam name="methodRowGridSelect" value="#{value.onRowGridSelect}" />
 
@@ -128,9 +133,18 @@
 
 
 
-        <h:panelGroup id="pg_dataRow_#{id}" layout="block" style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}">
+        <h:panelGroup id="pg_dataRow_#{id}" layout="block" style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}" >
+            
+            
+            <p:panel styleClass="ui-module-wrapper" >
+                <h:panelGroup styleClass="ui-module-row" layout="block">
+                    <ui:insert name="dataRow"></ui:insert>    
+                </h:panelGroup>    
+            </p:panel>
 
-            <ui:insert name="dataRow"></ui:insert>
+            
+            
+            
 
         </h:panelGroup>
 
