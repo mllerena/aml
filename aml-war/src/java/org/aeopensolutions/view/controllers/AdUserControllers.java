@@ -48,10 +48,7 @@ public class AdUserControllers implements Serializable {
     private AdUser activeItem;
 
     public AdUser getActiveItem() {
-        if( activeItem == null ){
-            setActiveItem(getListaUsuarios().getSelectedItem());
-        }
-        return activeItem;
+        return getListaUsuarios().getSelectedItem();
     }
 
     public void setActiveItem(AdUser activeItem) {
@@ -95,6 +92,12 @@ public class AdUserControllers implements Serializable {
         protected AdUser save(AdUser item) {
             System.out.println("save aduser: " + item);
             try {
+                
+                if( getPass1() == null ){
+                    JsfUtils.messageWarning(null, "Debe ingresar la contraseña.", null);        
+                    return null;
+                }
+                
                 item.setPassword(getPass1());
                 adUserFacade.save(item);
             } catch (Exception e) {
@@ -106,6 +109,20 @@ public class AdUserControllers implements Serializable {
 
             return item;
         }
+
+        @Override
+        protected void cancel() {
+            
+        }
+
+        @Override
+        protected void delete(List<AdUser> items) {
+            super.delete(items); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+        
+        
+        
 
        
 

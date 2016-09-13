@@ -88,7 +88,17 @@ public abstract class DataView<E extends AbstractEntityModel> {
         DataViewType viewTypeActive = (DataViewType) action.getComponent().getAttributes().get("viewType");
         System.out.println("viewTypeActive selected: " + viewTypeActive);
         
+        if( viewTypeActive ==  DataViewType.ROW){
+            return;
+        }
+        
         setViewTypeActive(viewTypeActive);
+        
+         setEnabledCreate(true);
+        setEnabledEdit(false);//
+        setEnabledSave(false);//
+        setEnabledDelete(false);
+        setEnabledCancel(false);
         
         
     }
@@ -186,16 +196,18 @@ public abstract class DataView<E extends AbstractEntityModel> {
     public void onRowSelect(SelectEvent event) {
         //FacesMessage msg = new FacesMessage("Row Selected", ((E) event.getObject()).getId());
         //FacesContext.getCurrentInstance().addMessage(null, msg);
-        JsfUtils.messageInfo(null, ((E) event.getObject()).getId() +" selected", null);
+        //JsfUtils.messageInfo(null, ((E) event.getObject()).getId() +" selected", null);
         setViewTypeActive(DataViewType.ROW);
+        setEnabledEdit(true);
+        setEnabledDelete(true);
     }
     
-    
-
     public final void actionCreate(ActionEvent action) {
         System.out.println("actionCreate selectedItem: " + action);
         setSelectedItem(create());
 
+        
+        setViewTypeActive(DataViewType.ROW);
         setEnabledCreate(false);
         setEnabledEdit(false);
 
@@ -210,19 +222,74 @@ public abstract class DataView<E extends AbstractEntityModel> {
     protected E create() {
         throw new UnsupportedOperationException();
     }
+    
+    public final void actionEdit(ActionEvent action) {
+        
+        edit(selectedItem);
+        
+        setEnabledCreate(false);
+        setEnabledEdit(false);
+        setEnabledSave(true);//activo guardar
+        setEnabledDelete(false);//
+        setEnabledCancel(true); //activo cancelar
+
+    }
+    
+     protected E edit(E item) {
+        return item;
+    }
+     
+     public final void actionDelete(ActionEvent action) {
+
+        List<E> deleteList = new ArrayList<E>();
+        deleteList.add(getSelectedItem());
+        delete(deleteList);
+        load();
+
+    }
+
+    protected void delete(List<E> items) {
+        throw new UnsupportedOperationException();
+    }
+    
+    
 
     public final void actionSave(ActionEvent action) {
-        
-        System.out.println("actionSave selectedItem: " + this.selectedItem);
 
         E newItem = save(this.selectedItem);
-        
-         initialize();
         
     }
 
     protected E save(E item) {
         return item;
+    }
+    
+    public final void actionCancel(ActionEvent action) {
+        setEnabledCreate(true);
+        setEnabledEdit(true);
+        setEnabledDelete(true);
+         setEnabledSave(false);
+        setEnabledCancel(false);
+
+        
+        cancel();
+        load();
+        
+        if( getSelectedItem().getId() == null ){
+            
+            if( getViewTypesAvailable() ==null){
+                return;
+            }
+            
+            setViewTypeActive(getViewTypesAvailable().get(0));
+        }else{
+            setViewTypeActive(DataViewType.ROW);
+        }
+        
+    }
+
+    protected void cancel() {
+        throw new UnsupportedOperationException();
     }
     
   

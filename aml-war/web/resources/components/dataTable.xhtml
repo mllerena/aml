@@ -62,7 +62,7 @@
     <p:dataTable id="#{id}" var="row" value="#{value}" widgetVar="wvDat_#{id}"  binding="#{component_table}"
                  rowKey="#{rowKey}" paginator="true"  
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                 paginatorPosition="top" rows="#{rows}"  
+                  paginatorAlwaysVisible="true" rows="#{rows}"  
                  rowsPerPageTemplate="#{rowsPerPageTemplate}"
                  currentPageReportTemplate="Total: {totalRecords} ({currentPage} de {totalPages})"
                  emptyMessage="#{emptyMessage}" 

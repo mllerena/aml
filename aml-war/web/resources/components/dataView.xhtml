@@ -8,87 +8,99 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 xmlns:jsf="http://xmlns.jcp.org/jsf"
                 >
-    
+
     <h:panelGroup id="pg_cmp_dv_#{id}">
 
-    <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix ui-widget-header">
-        <div class="ui-toolbar-group-left">
-            <p:commandButton process="@this" style="margin-left: 0px;text-align: center;" value="Crear"/> 
-        </div>
-        <div class="ui-toolbar-group-right">
+        <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix ui-widget-header">
+            <div class="ui-toolbar-group-left">
+                <p:commandButton process="@this" rendered="#{value.enabledCreate}" value="Crear" icon="fa fa-plus" actionListener="#{value.actionCreate}" update="@parent:@parent"/> 
+                
+                <p:commandButton process="@this" rendered="#{value.enabledSave}" value="Guardar" icon="fa fa-save" actionListener="#{value.actionSave}" update="@parent:@parent"/> 
+                
+                
+                
+                <p:commandButton process="@this" rendered="#{value.enabledEdit}" value="Editar" icon="fa fa-edit" actionListener="#{value.actionEdit}" update="@parent:@parent"/> 
+                
+                <p:commandButton process="@this" rendered="#{value.enabledDelete}" value="Eliminar" icon="fa fa-remove" actionListener="#{value.actionDelete}" update="@parent:@parent"/> 
+                
+                <p:commandButton process="@this" rendered="#{value.enabledCancel}" value="Descartar" icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent"/> 
+                
+            </div>
+            <div class="ui-toolbar-group-right">
 
-            <div class="searchLoader">
-                <p:graphicImage  name="search-loader.gif" library="images"/>
+                <div class="searchLoader">
+                    <p:graphicImage  name="search-loader.gif" library="images"/>
+                </div>
+
+                <p:inputText id="globalFilter" style="margin-right: 10px;" class="search" placeholder="Buscar" ></p:inputText>
+
+
+
+
+                <ui:repeat value="#{value.viewTypesAvailable}" var="viewType">
+
+                    <p:commandLink style="font-size: 17px !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
+                                   update="@parent:@parent:pg_cmp_dv_#{id}">
+                        <f:attribute name="viewType" value="#{viewType}"></f:attribute>
+                        <h:outputText styleClass="#{viewType eq 'TABLE' ? 'fa fa-bars' : viewType eq 'GRID' ? 'fa fa-th' : 'fa fa-file-o'}" />
+                    </p:commandLink>
+                    <p:spacer width="5"></p:spacer>
+
+                </ui:repeat>
+
+                <!--
+                <p:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-th" /></p:commandLink>
+                <p:spacer width="5"></p:spacer>
+                <p:commandLink style="font-size: 17px !important;" styleClass="active-nav-button"><h:outputText styleClass="fa fa-bars" /></p:commandLink>
+                <p:spacer width="5"></p:spacer>
+    
+                <p:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-table" /></p:commandLink>
+                <p:spacer width="5"></p:spacer>
+                -->
+
+
+
+
             </div>
 
-            <p:inputText id="globalFilter" style="margin-right: 10px;" class="search" placeholder="Buscar" ></p:inputText>
+
+
+        </p:outputPanel>
+
+        <p:spacer height="2"></p:spacer>                                                                                                                                                                                                                                             
+
+        <o:methodParam name="method" value="#{value.onRowSelect}" />
+
+        <h:panelGroup id="pg_dataTable_#{id}" layout="block" style="#{value.viewTypeActive eq 'TABLE' ? 'display : block;' : 'display : none;'}">
+
+
+            <ae:dataTable id="dt_#{id}" value="#{value.value}" var="row" selectionMode="single" selection="#{value.selectedItem}" rowKey="#{row.id}"> 
+
+
+                <ui:insert name="dataTable"></ui:insert>
+
+                <ui:define name="events">
+                    <p:ajax event="rowSelect" listener="#{method}"  update="@parent:@parent:@parent"/>    
+                </ui:define>
 
 
 
+            </ae:dataTable>
 
-            <ui:repeat value="#{value.viewTypesAvailable}" var="viewType">
-                
-                <p:commandLink style="font-size: 17px !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
-                               update="@parent:@parent:pg_cmp_dv_#{id}">
-                    <f:attribute name="viewType" value="#{viewType}"></f:attribute>
-                    <h:outputText styleClass="#{viewType eq 'TABLE' ? 'fa fa-bars' : viewType eq 'GRID' ? 'fa fa-th' : 'fa fa-table'}" />
-                </p:commandLink>
-                <p:spacer width="5"></p:spacer>
-                
-            </ui:repeat>
+        </h:panelGroup>
 
-            <!--
-            <p:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-th" /></p:commandLink>
-            <p:spacer width="5"></p:spacer>
-            <p:commandLink style="font-size: 17px !important;" styleClass="active-nav-button"><h:outputText styleClass="fa fa-bars" /></p:commandLink>
-            <p:spacer width="5"></p:spacer>
+        <h:panelGroup id="pg_dataGrid_#{id}" layout="block" style="#{value.viewTypeActive eq 'GRID' ? 'display : block;' : 'display : none;'}">
 
-            <p:commandLink style="font-size: 17px !important;" ><h:outputText styleClass="fa fa-table" /></p:commandLink>
-            <p:spacer width="5"></p:spacer>
-            -->
+            <ae:dataGrid   id="dg_#{id}"
+                           value="#{value.value}"
+                           >
+
+                <!--
+                <p:ajax event="page" oncomplete="updateGrid();"/>
+                -->
 
 
-
-
-        </div>
-
-
-
-    </p:outputPanel>
-
-    <p:spacer height="2"></p:spacer>                                                                                                                                                                                                                                             
-
-    <o:methodParam name="method" value="#{value.onRowSelect}" />
-
-    <div style="#{value.viewTypeActive eq 'TABLE' ? 'display : block;' : 'display : none;'}">
-
-        <ae:dataTable id="dt_#{id}" value="#{value.value}" var="row" selectionMode="single" selection="#{value.selectedItem}" rowKey="#{row.id}"> 
-
-
-            <ui:insert name="dataTable"></ui:insert>
-            
-            <ui:define name="events">
-                <p:ajax event="rowSelect" listener="#{method}"  update="pg_cmp_dv_#{id}"/>    
-            </ui:define>
-            
-            
-
-        </ae:dataTable>
-
-    </div>
-
-
-    <div style="#{value.viewTypeActive eq 'GRID' ? 'display : block;' : 'display : none;'}">
-        <ae:dataGrid   id="dg_#{id}"
-                       value="#{value.value}"
-                       >
-
-            <!--
-            <p:ajax event="page" oncomplete="updateGrid();"/>
-            -->
-
-
-            <ui:insert name="dataGrid"></ui:insert>
+                <ui:insert name="dataGrid"></ui:insert>
 
 
 
@@ -99,18 +111,22 @@
 
 
 
-        </ae:dataGrid>
+            </ae:dataGrid>
 
-    </div>
-    
-    <div style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}">
-        
-        <ui:insert name="dataRow"></ui:insert>
-        
-    </div>
-    
-    
-    
+        </h:panelGroup>
+
+
+
+        <h:panelGroup id="pg_dataRow_#{id}" layout="block" style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}">
+
+            <ui:insert name="dataRow"></ui:insert>
+
+        </h:panelGroup>
+
+
+
+
+
     </h:panelGroup>
 
 </ui:composition>
