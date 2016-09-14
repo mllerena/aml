@@ -10,40 +10,87 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:o="http://omnifaces.org/ui">
 
-    <ui:param name="contentTitle" value="Administración de Usuarios" ></ui:param>
+    <ui:define name="head">
+        <script>
+
+            function readPicture(input, output) {
+                if (input.files)
+                {
+                    if (input.files[0])
+                    {
+                        var reader = new FileReader();
+                        reader.onload = function (e)
+                        {
+                            output.attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                        console.log("cargo ok");
+                    }
+                }
+            }
+            
+            function showWindowFile(){
+                 $("[id='#{upload.clientId}']").trigger('click');
+            }
+            
+            function uploadFile(input){
+                        readPicture(input, $(".form_image img"));
+                        $("#frmUsuarios\\:imageModified").prop('checked', true);
+            }
+            
+            function removeFile(){
+                var source = $("[id='#{altImage.clientId}']").attr('src');
+                    $(".form_image img").attr('src', source);
+                    $("[id='#{upload.clientId}']").val('');
+                    $("#frmUsuarios\\:imageModified").prop('checked', true);
+            }
+
+        </script>
+    </ui:define>
 
     <ui:define name="content">
 
-        <h:form id="frmUsuarios">
+        <h:form id="frmUsuarios" enctype="multipart/form-data" >
 
 
-            <ae:dataView id="dvUsuarios" value="#{adUser.listaUsuarios}">
+            <ae:dataView id="dvUsuarios" value="#{adUser.listaUsuarios}" titleRow="Datos del usuario"> 
 
                 <ui:define name="dataTable">
                     <p:column headerText="Usuario" filterBy="#{row.name}" > 
                         <h:outputText value="#{row.name}" />
                     </p:column>
                 </ui:define>
-                
-                <ui:define name="dataGrid">
 
-                    
-                    
-                   
-                   
-                         <h:outputText value="#{row.name}" />
-                        
-                   
-                    
+                <ui:define name="dataGrid">
+                    <h:outputText value="#{row.name}" />
                 </ui:define>
-                
+
                 <ui:define name="dataRow">
                     
+                    <h:selectBooleanCheckbox  id="imageModified" value="#{adUser.imageModified}" style="display: none;" />
+
+                    <p:graphicImage  value="#" library="images" name="placeholder.png"  binding="#{altImage}" style="display: none;" id="img_backup"/>
+                    <h:inputFile style="display:none;"   id="pictureUpload"  value="#{adUser.image}" binding="#{upload}" validator="#{adUser.validateImage}" onchange="uploadFile(this)"/>
+                    <div class="form_image">
+                        <o:graphicImage rendered="#{adUser.activeItem.image != null}"  value="#{adUser.activeItem.image}" dataURI="true" />   
+                        <p:graphicImage rendered="#{adUser.activeItem.image == null}"  value="#" library="images" name="placeholder.png"  />
+                        <div class="form_image_buttons" style="position: absolute; width: 100%;">
+                            <p:commandLink styleClass="form_image_edit" process="@this" onclick="showWindowFile();">
+                                <h:outputText styleClass="fa fa-pencil" />
+                            </p:commandLink> 
+                            
+                             <p:commandLink styleClass="form_image_remove" process="@this" onclick="removeFile();">
+                                <h:outputText styleClass="fa fa-trash-o" />
+                            </p:commandLink> 
+                            
+                        </div>
+                    </div>
+
                     <h:outputText value="#{adUser.activeItem.username}" />
-                    
+
                 </ui:define>
-                
-                
+
+
 
 
 

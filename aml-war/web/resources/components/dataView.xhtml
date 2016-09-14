@@ -51,10 +51,10 @@
                     <h:inputHidden id="globalFilter" />
                 </o:moveComponent>
 
-                <ui:repeat value="#{value.viewTypesAvailable}" var="viewType" id="rViewType">
+                <ui:repeat value="#{value.viewTypesAvailable}" var="viewType" id="rViewType" >
 
                     <p:commandLink style="font-size: 17px !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
-                                   update="@parent:@parent:pg_cmp_dv_#{id}">
+                                   update="@parent:@parent:pg_cmp_dv_#{id}" process="@this">
                         <f:attribute name="viewType" value="#{viewType}"></f:attribute>
                         <h:outputText styleClass="#{viewType eq 'TABLE' ? 'fa fa-bars' : viewType eq 'GRID' ? 'fa fa-th' : 'fa fa-file-o'}" />
                     </p:commandLink>
@@ -83,7 +83,7 @@
                 <ui:insert name="dataTable"></ui:insert>
 
                 <ui:define name="events">
-                    <p:ajax event="rowSelect" listener="#{methodRowSelect}"  update="@parent:@parent:@parent"/>    
+                    <p:ajax event="rowSelect" listener="#{methodRowSelect}"  update="@parent:@parent:@parent #{pg_dataRow_id.clientId}"/>    
                 </ui:define>
 
 
@@ -107,7 +107,7 @@
                 -->
                 <ui:define name="dataGrid">
 
-                    <p:commandLink class="data-grid-link"  actionListener="#{methodRowGridSelect}" update="@parent:@parent:@parent">
+                    <p:commandLink class="data-grid-link"  actionListener="#{methodRowGridSelect}" update="@parent:@parent:@parent" process="@this">
                         <f:attribute name="rowGrid" value="#{row}"></f:attribute>
                         <div class="data-grid">
 
@@ -133,19 +133,11 @@
 
 
 
-        <h:panelGroup id="pg_dataRow_#{id}" layout="block" style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}" >
+        <h:panelGroup binding="#{pg_dataRow_id}" id="pg_dataRow_#{id}" layout="block" style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}" >
             
-            
-            <p:panel styleClass="ui-module-wrapper" >
-                <h:panelGroup styleClass="ui-module-row" layout="block">
-                    <ui:insert name="dataRow"></ui:insert>    
-                </h:panelGroup>    
+            <p:panel header="#{titleRow}">
+                <ui:insert name="dataRow"></ui:insert>        
             </p:panel>
-
-            
-            
-            
-
         </h:panelGroup>
 
 

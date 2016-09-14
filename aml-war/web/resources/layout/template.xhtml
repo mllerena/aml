@@ -13,10 +13,10 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
             <title>AE OpenSolutions Platform</title>
-            
+
             <h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
-            
-            
+
+
             <h:outputScript name="pfcrud.js" library="js"></h:outputScript>
 
             <ui:insert name="head" />
@@ -28,9 +28,11 @@
         <h:body >
 
 
+            <div class="ui-back-ground"></div>
+
             <p:growl autoUpdate="true" > </p:growl>
 
-            <h:form>
+           <h:form>
 
                 <p:menubar>
                     <p:submenu label="Configuración" icon="fa fa-gear">
@@ -38,23 +40,25 @@
                     </p:submenu>
                     <p:menuitem value="Inicio" url="/home.jsf" icon="fa fa-home"></p:menuitem>
                     <f:facet name="options">
-                        <!--
-                        <p:inputText placeholder="Búsqueda" style="margin-right: 10px;"></p:inputText>
-                        -->
                         <p:menuButton value="#{login.adUser.name.toUpperCase()}" >
                             <p:menuitem  value="Cerrar" icon="ui-icon-extlink" actionListener="#{login.logout()}"></p:menuitem>
                         </p:menuButton>
-                        
+
                     </f:facet>
                 </p:menubar>
 
             </h:form>
-            
+
             <p:spacer></p:spacer>
-            
-            <ui:insert name="content">
-            </ui:insert> 
-            
+
+
+            <div style="min-width: 500px;width: 1172px;margin: auto;padding: 20px;">
+                <div class="ui-content-center">
+                    <ui:insert name="content">
+                    </ui:insert> 
+                </div>
+            </div>
+
 
 
             <!--

@@ -13,10 +13,12 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -150,6 +152,11 @@ public class AdUser extends AbstractEntityModel implements Serializable {
     @JoinColumn(name = "supervisor_id", referencedColumnName = "id")
     @ManyToOne(fetch = javax.persistence.FetchType.LAZY)
     private AdUser supervisorId;
+    
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
 
     public AdUser() {
     }
@@ -335,6 +342,16 @@ public class AdUser extends AbstractEntityModel implements Serializable {
     public void setSupervisorId(AdUser supervisorId) {
         this.supervisorId = supervisorId;
     }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+    
+    
 
     @Override
     public int hashCode() {

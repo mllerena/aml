@@ -11,6 +11,13 @@
    <application>
        
     <resource-handler>org.omnifaces.resourcehandler.UnmappedResourceHandler</resource-handler>
+    
+      <factory>
+            <exception-handler-factory>org.omnifaces.exceptionhandler.FullAjaxExceptionHandlerFactory</exception-handler-factory> 
+        </factory>
+        
 </application>
+
+
 
 </faces-config>

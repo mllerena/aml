@@ -13,7 +13,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.Part;
 import org.aeopensolutions.model.ejb.facades.AdRoleFacade;
 import org.aeopensolutions.model.ejb.facades.AdUserFacade;
 import org.aeopensolutions.model.entities.AdRole;
@@ -33,9 +35,14 @@ public class AdUserControllers implements Serializable {
 
     @Inject
     private AdUserFacade adUserFacade;
+    
+     private AdUser activeItem;
 
     private String pass1;
     private String pass2;
+    
+    private Part image;
+    private boolean imageModified;
 
     @Inject
     private AdRoleFacade adRoleFacade;
@@ -44,8 +51,37 @@ public class AdUserControllers implements Serializable {
     public void initialize() {
         listaUsuarios.load();
     }
+
+    public Part getImage() {
+        return image;
+    }
+
+    public void setImage(Part image) {
+        this.image = image;
+    }
+
+    public boolean isImageModified() {
+        return imageModified;
+    }
+
+    public void setImageModified(boolean imageModified) {
+        this.imageModified = imageModified;
+    }
     
-    private AdUser activeItem;
+    public void validateImage(FacesContext ctx, UIComponent comp, Object value) {
+        if (value != null) {
+            Part file = (Part) value;
+
+            if (!file.getContentType().startsWith("image")) {
+                JsfUtils.messageWarning(null, "No hay imagen", null);
+            }
+            if (file.getSize() > 200024) {
+                JsfUtils.messageWarning(null, "Imagen muy grande", null);
+            }
+        }
+    }
+    
+   
 
     public AdUser getActiveItem() {
         return getListaUsuarios().getSelectedItem();
@@ -77,7 +113,7 @@ public class AdUserControllers implements Serializable {
         public List<DataViewType> viewTypes() { 
             List<DataViewType> list =  new ArrayList<>();
             list.add(DataViewType.TABLE);
-            //list.add(DataViewType.GRID);
+            list.add(DataViewType.GRID);
             list.add(DataViewType.ROW);
             return list;
         }

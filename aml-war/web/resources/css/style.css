@@ -1,3 +1,8 @@
+body {
+    display: block;
+    margin: 0px;
+}
+
 .ui-widget{
     font-size: 90%;
 }
@@ -84,6 +89,88 @@
 }
 
 .ui-module-wrapper {
-    background-color: #73ade7;
     width: 100%;
+}
+
+.ui-content-center {
+    background: #fff;
+    background-color: rgba(255, 255, 255, .95);
+    padding: 15px;
+    width: 1172px;
+    min-height: 300px;
+    float: left;
+    overflow: auto;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 0 5pxrgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 0 5pxrgba(0, 0, 0, .15);
+    box-shadow: 0 0 5pxrgba(0, 0, 0, .15);
+}
+
+.ui-back-ground {
+    background-color: #fff;
+    background: url("#{resource['images/layout/fondo3.jpg']}")no-repeat center center fixed;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    z-index: -999999;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: fixed;
+    -webkit-overflow-scrolling: touch;
+}
+
+.form_image {   
+    display: inline-block;
+    padding: 0;
+    position: relative;
+    vertical-align: top;
+    width: auto;
+}
+
+.form_image > img {
+    max-width: 90px; 
+    max-height: 90px; 
+    min-width: 90px; 
+    min-height: 90px;
+    border-radius: 3px; 
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); 
+    margin-bottom: 10px; 
+    border: 0; 
+}
+
+.form_image:hover  .form_image_buttons{
+    display: block;
+}
+
+.form_image_buttons {
+    top: 1px;
+    padding: 6px 0;
+    width: 100%;
+    display: none;
+    text-align: center !important;
+    box-sizing: border-box;
+    color: #eee;
+    background-color: #999 !important; 
+    border-radius: 3px 3px 0 0;
+    position: absolute !important;
+
+
+}
+
+.form_image_edit{
+    float: left ; 
+    margin-left: 8%;
+    color: white;
+    cursor: pointer;
+}
+
+.form_image_remove{
+    float: right ;
+    margin-right: 8%;
+    color: white;
+    cursor: pointer;
 }
