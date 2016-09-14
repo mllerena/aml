@@ -147,15 +147,16 @@ body {
 }
 
 .form_image_buttons {
-    top: 1px;
+    top: 0px;
     padding: 6px 0;
     width: 100%;
     display: none;
     text-align: center !important;
     box-sizing: border-box;
-    color: #eee;
-    background-color: #999 !important; 
-    border-radius: 3px 3px 0 0;
+    color: #fff;
+    background-color: #2399e5 !important; 
+    border-radius: 3px 3px 0 0 ;
+    border-color: #1f89ce;
     position: absolute !important;
 
 
@@ -164,13 +165,39 @@ body {
 .form_image_edit{
     float: left ; 
     margin-left: 8%;
-    color: white;
+    color: white !important;
     cursor: pointer;
 }
 
 .form_image_remove{
     float: right ;
     margin-right: 8%;
-    color: white;
+    color: white !important;
     cursor: pointer;
+}
+
+.ui-inputfield, .ui-selectonemenu {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #cfcfcf;
+    border-top-style: none !important;
+    border-right-style: none !important;
+    border-left-style: none !important;
+    /* background-color: #ffffff; */
+}
+
+.fullWidth {
+    width: 86% !important;
+}
+
+.form-label {
+    font-weight: 700 !important;
+    color: #666666;
+    font-size: 14px !important;
+    width: 14% !important;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
 }

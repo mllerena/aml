@@ -84,7 +84,12 @@ public class AdUserControllers implements Serializable {
    
 
     public AdUser getActiveItem() {
-        return getListaUsuarios().getSelectedItem();
+        AdUser activo = getListaUsuarios().getSelectedItem();
+        if( activo != null ){
+        setPass1(activo.getPassword());    
+        }
+        
+        return activo;
     }
 
     public void setActiveItem(AdUser activeItem) {
@@ -138,11 +143,16 @@ public class AdUserControllers implements Serializable {
 
         @Override
         protected AdUser save(AdUser item) {
-            System.out.println("save aduser: " + item);
+            System.out.println("save aduser: " + item+ " pass1: "+getPass1()+" pass2: "+getPass2());
             try {
                 
-                if( getPass1() == null ){
+                if( getPass1() == null || getPass2() == null){
                     JsfUtils.messageWarning(null, "Debe ingresar la contraseña.", null);        
+                    return null;
+                }
+                
+                if( !getPass1().trim().equals(getPass2().trim())){
+                    JsfUtils.messageWarning(null, "No coinciden las contraseñas.", null);        
                     return null;
                 }
                 

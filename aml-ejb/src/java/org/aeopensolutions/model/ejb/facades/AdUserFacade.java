@@ -141,6 +141,11 @@ public class AdUserFacade extends AbstractFacade<AdUser> {
    
     public void validateExistence(AdUser user) throws ExistException {
             AdUser temp = findByUsername(user.getUsername());
+            
+            if( temp.getUsername().equals(user.getUsername()) ){
+                return;
+            }
+            
             if (temp != null) {
                 throw new ExistException();
             }

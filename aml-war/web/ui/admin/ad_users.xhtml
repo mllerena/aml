@@ -28,21 +28,21 @@
                     }
                 }
             }
-            
-            function showWindowFile(){
-                 $("[id='#{upload.clientId}']").trigger('click');
+
+            function showWindowFile() {
+                $("[id='#{upload.clientId}']").trigger('click');
             }
-            
-            function uploadFile(input){
-                        readPicture(input, $(".form_image img"));
-                        $("#frmUsuarios\\:imageModified").prop('checked', true);
+
+            function uploadFile(input) {
+                readPicture(input, $(".form_image img"));
+                $("#frmUsuarios\\:imageModified").prop('checked', true);
             }
-            
-            function removeFile(){
+
+            function removeFile() {
                 var source = $("[id='#{altImage.clientId}']").attr('src');
-                    $(".form_image img").attr('src', source);
-                    $("[id='#{upload.clientId}']").val('');
-                    $("#frmUsuarios\\:imageModified").prop('checked', true);
+                $(".form_image img").attr('src', source);
+                $("[id='#{upload.clientId}']").val('');
+                $("#frmUsuarios\\:imageModified").prop('checked', true);
             }
 
         </script>
@@ -66,27 +66,80 @@
                 </ui:define>
 
                 <ui:define name="dataRow">
-                    
+
                     <h:selectBooleanCheckbox  id="imageModified" value="#{adUser.imageModified}" style="display: none;" />
 
                     <p:graphicImage  value="#" library="images" name="placeholder.png"  binding="#{altImage}" style="display: none;" id="img_backup"/>
                     <h:inputFile style="display:none;"   id="pictureUpload"  value="#{adUser.image}" binding="#{upload}" validator="#{adUser.validateImage}" onchange="uploadFile(this)"/>
-                    <div class="form_image">
-                        <o:graphicImage rendered="#{adUser.activeItem.image != null}"  value="#{adUser.activeItem.image}" dataURI="true" />   
-                        <p:graphicImage rendered="#{adUser.activeItem.image == null}"  value="#" library="images" name="placeholder.png"  />
-                        <div class="form_image_buttons" style="position: absolute; width: 100%;">
-                            <p:commandLink styleClass="form_image_edit" process="@this" onclick="showWindowFile();">
-                                <h:outputText styleClass="fa fa-pencil" />
-                            </p:commandLink> 
-                            
-                             <p:commandLink styleClass="form_image_remove" process="@this" onclick="removeFile();">
-                                <h:outputText styleClass="fa fa-trash-o" />
-                            </p:commandLink> 
-                            
-                        </div>
-                    </div>
 
-                    <h:outputText value="#{adUser.activeItem.username}" />
+                    <h:panelGrid columns="2" >
+                        <h:panelGroup layout="block" >
+
+
+
+                            <div class="form_image">
+                                <o:graphicImage rendered="#{adUser.activeItem.image != null}"  value="#{adUser.activeItem.image}" dataURI="true" />   
+                                <p:graphicImage rendered="#{adUser.activeItem.image == null}"  value="#" library="images" name="placeholder.png"  />
+                                <div class="form_image_buttons" style="position: absolute; width: 100%;">
+                                    <p:commandLink styleClass="form_image_edit" process="@this" onclick="showWindowFile();">
+                                        <h:outputText styleClass="fa fa-pencil" />
+                                    </p:commandLink> 
+
+                                    <p:commandLink styleClass="form_image_remove" process="@this" onclick="removeFile();">
+                                        <h:outputText styleClass="fa fa-trash-o" />
+                                    </p:commandLink> 
+
+                                </div>
+                            </div>
+
+                        </h:panelGroup>
+
+                        <h:panelGrid columns="2" style="margin-left: 10px;margin-bottom: 5px;">
+
+                            <p:inputText value="#{adUser.activeItem.firstname}" placeholder="Nombre" readonly="#{not adUser.listaUsuarios.enabledSave}"/> 
+                            <p:inputText value="#{adUser.activeItem.lastname}" placeholder="Apellido" readonly="#{not adUser.listaUsuarios.enabledSave}"/>
+
+                        </h:panelGrid>
+
+
+
+
+                    </h:panelGrid>
+
+
+                    
+                        
+                    
+
+                    <h:panelGrid columns="4" width="100%" >
+
+                        <p:outputLabel for="itUser" value="Usuario" styleClass="form-label"></p:outputLabel>
+                        <p:inputText id="itUser" value="#{adUser.activeItem.username}" placeholder="Usuario" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth"/> 
+                        <p:outputLabel for="itPass" value="Contraseña" styleClass="form-label"></p:outputLabel>
+                        
+                        <p:inputText id="itPass" value="#{adUser.pass1}" placeholder="Contraseña" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth" type="password"/>
+                        
+                        <p:spacer></p:spacer>
+                        <p:spacer></p:spacer>
+                        
+                        <p:spacer></p:spacer>
+                        <p:inputText id="itPass2" value="#{adUser.pass2}" placeholder="Confirmar contraseña" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth" type="password"/>
+                        
+
+                    </h:panelGrid>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 </ui:define>
 
