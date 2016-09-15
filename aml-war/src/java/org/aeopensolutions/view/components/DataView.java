@@ -254,6 +254,7 @@ public abstract class DataView<E extends AbstractEntityModel> {
         setViewTypeActive(DataViewType.ROW);
         setEnabledEdit(true);
         setEnabledDelete(true);
+        rowSelected(selectedItem);
     }
     
     public void onRowGridSelect(ActionEvent action) {
@@ -263,7 +264,12 @@ public abstract class DataView<E extends AbstractEntityModel> {
         setViewTypeActive(DataViewType.ROW);
         setEnabledEdit(true);
         setEnabledDelete(true);
+        rowSelected(selectedItem);
     }
+    
+    protected void rowSelected(E item) {
+        
+    } 
     
     public final void actionCreate(ActionEvent action) {
         System.out.println("actionCreate selectedItem: " + action);
@@ -320,7 +326,7 @@ public abstract class DataView<E extends AbstractEntityModel> {
     public final void actionSave(ActionEvent action) {
 
         E newItem = save(this.selectedItem);
-        
+        load();
     }
 
     protected E save(E item) {

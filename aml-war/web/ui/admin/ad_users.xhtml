@@ -62,7 +62,12 @@
                 </ui:define>
 
                 <ui:define name="dataGrid">
-                    <h:outputText value="#{row.name}" />
+                    <h:panelGrid columns="2" >
+                        <p:graphicImage rendered="#{row.image == null}"  value="#" library="images" name="placeholder.png"  class="data-grid_image"/>
+                        <o:graphicImage rendered="#{row.image != null}"  value="#{row.image}" dataURI="true" class="data-grid_image"/>   
+                    <h:outputText value="#{row.name}" />    
+                    </h:panelGrid>
+                    
                 </ui:define>
 
                 <ui:define name="dataRow">
@@ -80,7 +85,7 @@
                             <div class="form_image">
                                 <o:graphicImage rendered="#{adUser.activeItem.image != null}"  value="#{adUser.activeItem.image}" dataURI="true" />   
                                 <p:graphicImage rendered="#{adUser.activeItem.image == null}"  value="#" library="images" name="placeholder.png"  />
-                                <div class="form_image_buttons" style="position: absolute; width: 100%;">
+                                <div class="#{adUser.listaUsuarios.enabledSave ? 'form_image_buttons' : ''}" style="position: absolute; width: 100%;">
                                     <p:commandLink styleClass="form_image_edit" process="@this" onclick="showWindowFile();">
                                         <h:outputText styleClass="fa fa-pencil" />
                                     </p:commandLink> 

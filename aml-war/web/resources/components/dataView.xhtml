@@ -15,9 +15,9 @@
             <div class="ui-toolbar-group-left">
                 <p:commandButton process="@this" rendered="#{value.enabledCreate}" value="Crear" icon="fa fa-plus" actionListener="#{value.actionCreate}" update="@parent:@parent"/> 
 
-                <p:commandButton process="@this" rendered="#{value.enabledSave}" value="Guardar" icon="fa fa-save" actionListener="#{value.actionSave}" update="@parent:@parent"/> 
-
-
+                <p:commandButton ajax="false" rendered="#{value.enabledSave}" value="Guardar" icon="fa fa-save" actionListener="#{value.actionSave}" update="@parent:@parent"> 
+                    <f:ajax execute="@form"  render="@form"/> 
+                </p:commandButton>
 
                 <p:commandButton process="@this" rendered="#{value.enabledEdit}" value="Editar" icon="fa fa-edit" actionListener="#{value.actionEdit}" update="@parent:@parent"/> 
 

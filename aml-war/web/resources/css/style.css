@@ -201,3 +201,15 @@ body {
     margin-right: -15px;
     margin-left: -15px;
 }
+
+.data-grid .data-grid_image{
+    display: inline-block;
+    vertical-align: top;
+    width: 64px;
+    height: 70px; 
+    text-align: center;
+    overflow: hidden; 
+    border-radius: 3px; 
+    border: 0; 
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); 
+}

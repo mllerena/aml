@@ -5,9 +5,14 @@
  */
 package org.aeopensolutions.view.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -24,6 +29,7 @@ import org.aeopensolutions.view.components.DataTable;
 import org.aeopensolutions.view.components.DataView;
 import org.aeopensolutions.view.components.DataViewType;
 import org.aeopensolutions.view.utils.JsfUtils;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -57,7 +63,17 @@ public class AdUserControllers implements Serializable {
     }
 
     public void setImage(Part image) {
-        this.image = image;
+        if (image != null) {
+            try {
+                InputStream input = image.getInputStream();
+                activeItem.setImage(IOUtils.toByteArray(input));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else if (image == null && activeItem.getImage() != null && imageModified == true) {
+            activeItem.setImage(null);
+        }
+        System.out.println("setImage: "+image);
     }
 
     public boolean isImageModified() {
@@ -84,12 +100,7 @@ public class AdUserControllers implements Serializable {
    
 
     public AdUser getActiveItem() {
-        AdUser activo = getListaUsuarios().getSelectedItem();
-        if( activo != null ){
-        setPass1(activo.getPassword());    
-        }
-        
-        return activo;
+        return this.activeItem;
     }
 
     public void setActiveItem(AdUser activeItem) {
@@ -124,6 +135,14 @@ public class AdUserControllers implements Serializable {
         }
 
         @Override
+        protected void rowSelected(AdUser item) {
+            setPass1(item.getPassword());    
+            setActiveItem(item);
+        }
+        
+        
+
+        @Override
         protected void initialize() {
             System.out.println("initialize DataView AdUser");
         }
@@ -143,7 +162,7 @@ public class AdUserControllers implements Serializable {
 
         @Override
         protected AdUser save(AdUser item) {
-            System.out.println("save aduser: " + item+ " pass1: "+getPass1()+" pass2: "+getPass2());
+            System.out.println("save aduser: " + item+ " pass1: "+getPass1()+" pass2: "+getPass2()+" image: "+Arrays.toString(item.getImage()));
             try {
                 
                 if( getPass1() == null || getPass2() == null){
@@ -158,6 +177,9 @@ public class AdUserControllers implements Serializable {
                 
                 item.setPassword(getPass1());
                 adUserFacade.save(item);
+                setSelectedItem(item);
+                setPass1(null);
+                setPass2(null);
             } catch (Exception e) {
                 JsfUtils.messageError(null, e.getMessage(), null);
                 return null;
