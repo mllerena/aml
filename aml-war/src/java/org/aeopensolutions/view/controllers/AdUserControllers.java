@@ -112,6 +112,11 @@ public class AdUserControllers implements Serializable {
 
     private DataView<AdUser> listaUsuarios = new DataView<AdUser>() {
         
+         @Override
+        protected void initialize() {
+            System.out.println("initialize DataView AdUser");
+        }
+        
         @Override
         protected List<AdUser> filterGrid(String searchKey,List<AdUser> filteredValues) {
             List<AdUser> results = new ArrayList<>();
@@ -142,10 +147,7 @@ public class AdUserControllers implements Serializable {
         
         
 
-        @Override
-        protected void initialize() {
-            System.out.println("initialize DataView AdUser");
-        }
+       
 
         @Override
         public List<AdUser> findAll() {
@@ -162,6 +164,9 @@ public class AdUserControllers implements Serializable {
 
         @Override
         protected AdUser save(AdUser item) {
+            
+            item.setImage(getActiveItem().getImage());
+            
             System.out.println("save aduser: " + item+ " pass1: "+getPass1()+" pass2: "+getPass2()+" image: "+Arrays.toString(item.getImage()));
             try {
                 
@@ -178,7 +183,7 @@ public class AdUserControllers implements Serializable {
                 item.setPassword(getPass1());
                 adUserFacade.save(item);
                 setSelectedItem(item);
-                setPass1(null);
+                setPass1(item.getPassword());
                 setPass2(null);
             } catch (Exception e) {
                 JsfUtils.messageError(null, e.getMessage(), null);
@@ -197,7 +202,14 @@ public class AdUserControllers implements Serializable {
 
         @Override
         protected void delete(List<AdUser> items) {
-            super.delete(items); //To change body of generated methods, choose Tools | Templates.
+            try {
+                adUserFacade.delete(items.get(0));
+                
+            } catch (Exception e) {
+                JsfUtils.messageError(null, e.getMessage(), null);
+            }
+
+            JsfUtils.messageInfo(null, "Usuario eliminado correctamente.", null);
         }
         
         

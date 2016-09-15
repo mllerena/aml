@@ -176,6 +176,7 @@ body {
     cursor: pointer;
 }
 
+/*
 .ui-inputfield, .ui-selectonemenu {
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
@@ -183,8 +184,9 @@ body {
     border-top-style: none !important;
     border-right-style: none !important;
     border-left-style: none !important;
-    /* background-color: #ffffff; */
+  
 }
+*/
 
 .fullWidth {
     width: 86% !important;
@@ -213,3 +215,8 @@ body {
     border: 0; 
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); 
 }
+
+button.ui-button.ui-state-default.gray-button {
+    color: #525252;
+}
+

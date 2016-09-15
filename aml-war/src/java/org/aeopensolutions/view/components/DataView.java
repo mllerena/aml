@@ -314,6 +314,7 @@ public abstract class DataView<E extends AbstractEntityModel> {
         deleteList.add(getSelectedItem());
         delete(deleteList);
         load();
+        setViewTypeActive(DataViewType.TABLE);
 
     }
 

@@ -13,15 +13,18 @@
 
         <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix ui-widget-header">
             <div class="ui-toolbar-group-left">
-                <p:commandButton process="@this" rendered="#{value.enabledCreate}" value="Crear" icon="fa fa-plus" actionListener="#{value.actionCreate}" update="@parent:@parent"/> 
+                <p:commandButton process="@this" rendered="#{value.enabledCreate}" value="Crear" icon="fa fa-plus" actionListener="#{value.actionCreate}" update="@parent:@parent" styleClass="red-button"/> 
 
-                <p:commandButton ajax="false" rendered="#{value.enabledSave}" value="Guardar" icon="fa fa-save" actionListener="#{value.actionSave}" update="@parent:@parent"> 
-                    <f:ajax execute="@form"  render="@form"/> 
+                <p:commandButton ajax="false" rendered="#{value.enabledSave}" value="Guardar" icon="fa fa-save" actionListener="#{value.actionSave}" 
+                                 process="@form" update="@parent:@parent"> 
                 </p:commandButton>
 
                 <p:commandButton process="@this" rendered="#{value.enabledEdit}" value="Editar" icon="fa fa-edit" actionListener="#{value.actionEdit}" update="@parent:@parent"/> 
 
-                <p:commandButton process="@this" rendered="#{value.enabledDelete}" value="Eliminar" icon="fa fa-remove" actionListener="#{value.actionDelete}" update="@parent:@parent"/> 
+                <p:commandButton process="@this" rendered="#{value.enabledDelete}" value="Eliminar" icon="fa fa-remove" actionListener="#{value.actionDelete}" update="@parent:@parent"> 
+                    <p:confirm header="Confirmación" message="¿Esta seguro que desea eliminar el registro?"
+                                   icon="ui-icon-alert"  />
+                </p:commandButton>
 
                 <p:commandButton process="@this" rendered="#{value.enabledCancel}" value="Descartar" icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent"/> 
 
