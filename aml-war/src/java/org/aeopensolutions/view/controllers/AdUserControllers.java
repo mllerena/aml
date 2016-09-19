@@ -159,7 +159,8 @@ public class AdUserControllers implements Serializable {
             System.out.println("create aduser");
             setPass1(null);
             setPass2(null);
-            return new AdUser();
+            setActiveItem(new AdUser());
+            return getActiveItem();
         }
 
         @Override

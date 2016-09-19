@@ -2,14 +2,14 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions"
                 xmlns:ae="http://primefaces.org/aeopensolutions"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:o="http://omnifaces.org/ui">
 
+
     <ae:default var="rendered" value="true" /> 
-    
-    
+
+
 
     <ae:default var="renderedNew" value="true" />
     <ae:default var="renderedEdit" value="true" />
@@ -27,177 +27,45 @@
     <ae:default var="labelProcess" value="Procesar" />
     <ae:default var="labelGenerate" value="Generar" />
 
-    <ae:default var="labelSaveEdit" value="Guardar Edit" />
-
-    <ae:default var="messageDelete" value="¿Está seguro de eliminar la selección de registro(s)?" />
-
-    <ae:default var="editable" value="#{true}" />
-
-    <ae:default var="rows" value="5" />
-    
-    <ae:default var="style" value="" />
 
 
-    <style type="text/css">
-        .ui-toolbar-group-left{
-            line-height: 25px;
-        }
-
-        .ui-toolbar-group-left > span{
-            display: inline-block;
-            vertical-align: middle;
-            line-height: 1em; /*set line height back to normal*/
-            margin-left: 2px;
-        }
-
-        .rowEdited {
-            background-color: #2191c0 !important;
-            background-image: none !important;
-            color: #ffffff !important;
-        }
-
-    </style>
+    <ae:context dataTableId="dt_#{id}" widgetVarId="wv_dt_#{id}"> 
 
 
-    <ae:context toolbarId="toolbar_#{id}" listId="list_#{id}" formEditId="formEdit_#{id}" data="#{value.dataTable}" dataList="#{value}" updateComponents="#{dataList.updateComponents}"> 
 
-        
+        <h:panelGroup id="#{id}" style="height:100%;#{style}" rendered="#{rendered}">       
             
-        <h:panelGroup id="#{id}" style="height:100%;#{style}" rendered="#{rendered}">                                    
-                  
-            <p:toolbar id="#{toolbarId}">
-                <f:facet name="left">
-                    <h2 class="CardTopic">#{title}</h2>
-                </f:facet>
-                <f:facet name="right">
-                    
-                    
-
-                    <p:commandButton icon="fa fa-plus" id="cbNew_#{id}" process="@this" update="#{id} #{formEditId} #{toolbarId} #{listId}"
-                                     actionListener="#{dataList.actionCreate}" value="#{labelNew}" rendered="#{renderedNew and dataList.enabledCreate}" disabled="#{not dataList.enabledCreate}"> 
-                        <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                    </p:commandButton>
-                    
-                    <p:commandButton icon="fa fa-refresh" id="cbRefresh_#{id}" value="Refrescar" process="@this" update="#{id} #{formEditId} #{toolbarId} #{listId}"
-                                     actionListener="#{dataList.actionRefresh}" rendered="#{renderedNew and dataList.enabledCreate}"> 
-                    </p:commandButton>
-
-
-                    <p:commandButton icon="fa fa-save" id="cbSave_#{id}" 
-                                     process="@this #{formEditId}"
-                                     update="#{id} #{formEditId} #{toolbarId} #{listId}"
-                                     actionListener="#{dataList.actionSave}" value="#{labelSave}" 
-                                     rendered="#{dataList.enabledSave}">  
-                        <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                    </p:commandButton>
-                    
-
-                    <p:commandButton icon="fa fa-remove" 
-                                     id="cbDelete_#{id}" process="@this #{formEditId}" update="#{id} #{formEditId} #{toolbarId} #{listId}"
-                                     actionListener="#{dataList.actionDelete}" value="#{labelDelete}" rendered="#{dataList.enabledDelete}" disabled="#{not dataList.enabledDelete}"> 
-                        <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                        <p:confirm header="Confirmación" message="#{messageDelete}"
-                                   icon="ui-icon-alert"  />
-                    </p:commandButton>
-
-
-
-                    <p:commandButton icon="fa fa-ban" 
-                                     process="@this" update="#{id} #{toolbarId} #{listId}"
-                                     actionListener="#{dataList.actionCancel}" disabled="#{not dataList.enabledCancel}"
-                                     id="cbCancel_#{id}" rendered="#{dataList.enabledCancel}" value="#{labelCancel}">
-                        <f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-                    </p:commandButton>
-
-                    <p:commandButton icon="ui-icon-check" 
-                                     process="@this" 
-                                     actionListener="#{dataList.actionProcess}"
-                                     id="cbProcess_#{id}" rendered="#{not (empty data) and renderedProcess}" value="#{labelProcess}" disabled="#{not dataList.enabledProcess}">
-                    </p:commandButton>	
-
-                    <p:commandButton icon="ui-icon-transferthick-e-w"
-                                     process="@this" update="#{toolbarId} #{listId}"
-                                     actionListener="#{dataList.actionGenerate}"
-                                     id="cbGenerate_#{id}" rendered="#{not (empty data) and renderedGenerate}" value="#{labelGenerate}" disabled="#{not dataList.enabledGenerate}"> 
-                    </p:commandButton>
-                    
-                    
-                    <p:remoteCommand name="onEditEvent#{listId}" process="@this" 
-                                     update="#{id} #{formEditId} #{toolbarId} #{listId} #{updateComponents}"></p:remoteCommand>               
-
-                    <ui:insert name="extraButtons" />
-
-
-
-                </f:facet>
-
-            </p:toolbar>
-             
             
+            <ae:dataTable id="#{dataTableId}" value="#{value.value}" var="row"  rowIndexVar="rowIndex"  widgetVar="#{widgetVarId}" auditable="false">  
 
-            <ae:dataTable id="#{listId}" value="#{data}" 
-                          rowKey="#{rowKey}"  selectionMode="multiple"  
-                          selection="#{dataList.selectItems}" renderedSelectionMode="false" editable="#{editable}" rowStyleClass="#{row.change? 'rowEdited' : null}" rows="#{rows}" rendered="#{not dataList.enabledSave}" 
-                          options="true">
-                 
-                <!--
-                <p:column headerText="" style="width:16px;text-align:center" >
-                    <h:panelGroup rendered="#{row.change}" style="padding:0px;spacing:0px;">
-                        <img src="../images/pencil.png" />
-                    </h:panelGroup>
+
+                <ui:insert name="dataTable"></ui:insert>
+
+                <ui:define name="events">
+                    <p:ajax event="rowEditInit" global="false"  listener="#{value.onRowEditInit(item)}" onstart="hideTableButtons(); hideAdd();" />  
+                    <p:ajax event="rowEdit" listener="#{value.onRowEdit(rowIndex)}"  update=":SaleOrderForm:OrderTotal :SaleOrderForm:msgs" oncomplete="if(args.validationFailed){hideTableButtons(); hideAdd();}else{showTableButtons(); showAdd();}"/>
+                    <p:ajax event="rowEditCancel" listener="#{value.onRowCancel(rowIndex)}" oncomplete="showTableButtons(); showAdd();" />
+                </ui:define>
+                
+                
+                <p:column style="width:55px;"> 
+                    <div style="display: inline-block;">
+                        <p:commandLink styleClass="ui-icon ui-icon-trash" process="@this"  update=":SaleOrderForm:orderLines" actionListener="#{saleOrderController.onRowDelete(rowIndex)}"/> 
+                    </div>
+                    <p:rowEditor/>
                 </p:column>
-                -->
-                
-                
                 
                 <ae:context header="">
-                    <ui:insert name="table">
-                        <ui:param name="row" value="#{row}"></ui:param>
-                    </ui:insert>
-                </ae:context> 
-                <ui:define name="events"> 
-                    
-                    <!--
-                    <p:ajax event="rowSelectCheckbox" listener="#{dataList.onRowSelect()}" /> 
-                    
-                    
-                    <p:ajax event="rowUnselectCheckbox" listener="#{dataList.onRowUnselect()}" process="@this #{listId}" update="#{id} #{listId}" partialSubmit="true"/>
-                    
-                    
-                    <p:ajax event="toggleSelect" listener="#{dataList.onRowSelect()}" process="#{listId}" update="#{id} @parent:#{toolbarId} #{listId}"/>
-                    
-                    -->
+                    <ui:insert >
 
-                </ui:define>
-                
-                <ui:define name="options"> 
-                    
-                    <p:commandButton id="cbEdit_#{id}"
-                                     process="@this" 
-                                     ignoreAutoUpdate="true"
-                                     actionListener="#{dataList.actionEdit(row,listId)}" icon="fa fa-pencil"  >  
-                    </p:commandButton>
-                    
-                </ui:define>
+                    </ui:insert>
+                </ae:context>
+
 
 
             </ae:dataTable>
 
-
-            <ae:context activeItem="#{dataList.activeItem}">
-
-                <h:panelGroup id="#{formEditId}" style="height:100%;" rendered="#{dataList.enabledSave}" >
-
-                    
-                    <p:panel>
-                                <ui:insert name="formEdit"/> 
-                    </p:panel>
-                    
-                </h:panelGroup>
-
-            </ae:context>
-
-        </h:panelGroup>
+        </h:panelGroup>            
 
 
 

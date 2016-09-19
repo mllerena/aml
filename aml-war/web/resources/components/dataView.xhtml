@@ -26,7 +26,8 @@
                                    icon="ui-icon-alert"  />
                 </p:commandButton>
 
-                <p:commandButton process="@this" rendered="#{value.enabledCancel}" value="Descartar" icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent"/> 
+                <p:commandButton process="@this" rendered="#{value.enabledCancel}" value="Descartar" 
+                                 icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent"/> 
 
             </div>
             <div class="ui-toolbar-group-right">
@@ -80,7 +81,7 @@
         <h:panelGroup id="pg_dataTable_#{id}" layout="block" style="#{value.viewTypeActive eq 'TABLE' ? 'display : block;' : 'display : none;'}">
 
 
-            <ae:dataTable id="dt_#{id}" value="#{value.value}" var="row" selectionMode="single" selection="#{value.selectedItem}" rowKey="#{row.id}" widgetVar="wv_dt_#{id}" filteredValue="#{value.filteredValues}"> 
+            <ae:dataTable id="dt_#{id}" value="#{value.value}" var="row" selectionMode="single" selection="#{value.selectedItem}" rowKey="#{row.id}" widgetVar="wv_dt_#{id}" filteredValue="#{value.filteredValues}" auditable="true">  
 
 
                 <ui:insert name="dataTable"></ui:insert>

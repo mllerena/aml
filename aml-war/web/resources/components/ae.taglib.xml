@@ -29,6 +29,14 @@
             <type>java.lang.String</type>
         </attribute>
         
+        <attribute>
+            <name>auditable</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        
+        
+        
     </tag>
     
     <tag>
@@ -678,6 +686,12 @@
         
         <attribute>
             <name>options</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        
+        <attribute>
+            <name>auditable</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
         </attribute>

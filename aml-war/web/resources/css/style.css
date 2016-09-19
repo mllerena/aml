@@ -58,7 +58,7 @@ body {
     padding-top: 10px !important;
     padding-bottom: 10px !important;
     padding-right: 7px !important;
-    background-color: #939393 !important;
+    background-color: #fff !important;
 }
 
 .ui-datatable .ui-column-filter {
@@ -219,4 +219,9 @@ body {
 button.ui-button.ui-state-default.gray-button {
     color: #525252;
 }
+
+.ui-inputtext:read-only {
+    border: 0px !important;
+}
+
 

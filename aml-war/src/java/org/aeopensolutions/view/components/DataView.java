@@ -105,6 +105,7 @@ public abstract class DataView<E extends AbstractEntityModel> {
         setEnabledCancel(false);
         
         load();
+        setSelectedItem(null);
         
         
     }
@@ -336,9 +337,8 @@ public abstract class DataView<E extends AbstractEntityModel> {
     
     public final void actionCancel(ActionEvent action) {
         setEnabledCreate(true);
-        setEnabledEdit(true);
-        setEnabledDelete(true);
-         setEnabledSave(false);
+       
+        setEnabledSave(false);
         setEnabledCancel(false);
 
         
@@ -351,8 +351,13 @@ public abstract class DataView<E extends AbstractEntityModel> {
                 return;
             }
             
+            setEnabledEdit(false);
+            setEnabledDelete(false);
+            
             setViewTypeActive(getViewTypesAvailable().get(0));
         }else{
+             setEnabledEdit(true);
+        setEnabledDelete(true);
             setViewTypeActive(DataViewType.ROW);
         }
         
