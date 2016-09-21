@@ -34,7 +34,7 @@ public abstract class DataList<E extends AbstractEntityModel> {
 
     protected List<E> selectItems;
 
-    protected E activeItem;
+    //protected E activeItem;
 
     protected List<E> modifiedItems;
 
@@ -133,13 +133,14 @@ public abstract class DataList<E extends AbstractEntityModel> {
         this.selectItems = selectItems;
     }
 
+    /*
     public E getActiveItem() {
         return activeItem;
     }
 
     public void setActiveItem(E activeItem) {
         this.activeItem = activeItem;
-    }
+    }*/
 
     public List<E> getModifiedItems() {
         return modifiedItems;
@@ -179,6 +180,29 @@ public abstract class DataList<E extends AbstractEntityModel> {
 
     public int getRowModifiedCountTotal() {
         return getModifiedItems() != null ? getModifiedItems().size() : 0;
+    }
+    
+    public void onRowAdd(ActionEvent event) {
+
+        
+
+    }
+
+    public void onRowDelete(int Index) {
+        
+    }
+
+    public void onRowEditInit(E item) {
+        
+    }
+
+    public void onRowEdit(int index) {
+
+        
+    }
+
+    public void onRowCancel(int index) {
+        
     }
 
     

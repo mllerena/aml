@@ -136,6 +136,7 @@
                     
                     <p:tabView id="tvDetalleRoles">
                         <p:tab title="Roles">
+                            <!--
                             <h:panelGrid columns="4" width="100%" >
 
                                 <p:outputLabel value="Roles" styleClass="form-label"></p:outputLabel>
@@ -145,6 +146,19 @@
                         
 
                             </h:panelGrid>
+                            -->
+                            
+                            
+                            <ae:dataList id="dlTest" title="ok" value="#{adUser.listaUsuarioRoles}"  >
+                                <ui:define name="dataTable">
+                                    <p:column headerText="Rol" filterBy="{row.adRoleId.name}" > 
+                                        <h:outputText value="#{row.adRoleId.name}" />
+                                    </p:column>
+                                    
+                                </ui:define>
+                            </ae:dataList>
+                            
+                            
                         </p:tab>
                     </p:tabView>
 

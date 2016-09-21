@@ -36,34 +36,60 @@
         <h:panelGroup id="#{id}" style="height:100%;#{style}" rendered="#{rendered}">       
             
             
-            <ae:dataTable id="#{dataTableId}" value="#{value.value}" var="row"  rowIndexVar="rowIndex"  widgetVar="#{widgetVarId}" auditable="false">  
+            <ae:dataTable id="#{dataTableId}" value="#{value.value}" var="row"  rowIndexVar="rowIndex"  widgetVar="#{widgetVarId}" auditable="false" rowKey="#{row.id}">  
 
 
-                <ui:insert name="dataTable"></ui:insert>
+                
 
                 <ui:define name="events">
                     <p:ajax event="rowEditInit" global="false"  listener="#{value.onRowEditInit(item)}" onstart="hideTableButtons(); hideAdd();" />  
-                    <p:ajax event="rowEdit" listener="#{value.onRowEdit(rowIndex)}"  update=":SaleOrderForm:OrderTotal :SaleOrderForm:msgs" oncomplete="if(args.validationFailed){hideTableButtons(); hideAdd();}else{showTableButtons(); showAdd();}"/>
+                    <p:ajax event="rowEdit" listener="#{value.onRowEdit(rowIndex)}"  oncomplete="if(args.validationFailed){hideTableButtons(); hideAdd();}else{showTableButtons(); showAdd();}"/>
                     <p:ajax event="rowEditCancel" listener="#{value.onRowCancel(rowIndex)}" oncomplete="showTableButtons(); showAdd();" />
                 </ui:define>
                 
                 
                 <p:column style="width:55px;"> 
                     <div style="display: inline-block;">
-                        <p:commandLink styleClass="ui-icon ui-icon-trash" process="@this"  update=":SaleOrderForm:orderLines" actionListener="#{saleOrderController.onRowDelete(rowIndex)}"/> 
+                        <p:commandLink styleClass="ui-icon ui-icon-trash" process="@this"  actionListener="#{value.onRowDelete(rowIndex)}"/> 
                     </div>
                     <p:rowEditor/>
                 </p:column>
                 
-                <ae:context header="">
+                <ui:insert name="dataTable">
+                    
+                    
+                </ui:insert>
+                
+                <!--
+                 <ae:context header="">
                     <ui:insert >
 
                     </ui:insert>
                 </ae:context>
+                -->
+               
 
 
 
             </ae:dataTable>
+            
+            <div id="extraLines">
+                                <div class="ui-datatable ui-widget datalist">
+                                    <div class="ui-datatable-tablewrapper">
+                                        <table role="grid">
+                                            <tbody  class="ui-datatable-data ui-widget-content">
+                                                <tr>
+                                                    <td style="text-align: left !important;">
+                                                        <a style="display: inline;"  id="add" onclick="showRow();
+                                                                hideTableButtons();">Agregar item</a>
+                                                        &#160;
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                            <tfoot class="tableFoot"><td><tr></tr></td></tfoot>
+                                        </table></div></div>
+                            </div>  
 
         </h:panelGroup>            
 

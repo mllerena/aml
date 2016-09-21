@@ -23,8 +23,11 @@ import javax.inject.Inject;
 import javax.servlet.http.Part;
 import org.aeopensolutions.model.ejb.facades.AdRoleFacade;
 import org.aeopensolutions.model.ejb.facades.AdUserFacade;
+import org.aeopensolutions.model.ejb.facades.AdUserRolesFacade;
 import org.aeopensolutions.model.entities.AdRole;
 import org.aeopensolutions.model.entities.AdUser;
+import org.aeopensolutions.model.entities.AdUserRoles;
+import org.aeopensolutions.view.components.DataList;
 import org.aeopensolutions.view.components.DataTable;
 import org.aeopensolutions.view.components.DataView;
 import org.aeopensolutions.view.components.DataViewType;
@@ -52,6 +55,9 @@ public class AdUserControllers implements Serializable {
 
     @Inject
     private AdRoleFacade adRoleFacade;
+    
+    @Inject
+    private AdUserRolesFacade adUserRolesFacade;
 
     @PostConstruct
     public void initialize() {
@@ -143,6 +149,7 @@ public class AdUserControllers implements Serializable {
         protected void rowSelected(AdUser item) {
             setPass1(item.getPassword());    
             setActiveItem(item);
+            getListaUsuarioRoles().load();
         }
         
         
@@ -228,6 +235,30 @@ public class AdUserControllers implements Serializable {
     public void setListaUsuarios(DataView<AdUser> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
+    
+    
+    private DataList<AdUserRoles> listaUsuarioRoles = new DataList<AdUserRoles>() {
+        @Override
+        protected void initialize() {
+            
+        }
+
+        @Override
+        public List<AdUserRoles> findAll() {
+            return adUserRolesFacade.findByAdUser(getActiveItem());
+        }
+    };
+
+    public DataList<AdUserRoles> getListaUsuarioRoles() {
+        return listaUsuarioRoles;
+    }
+
+    public void setListaUsuarioRoles(DataList<AdUserRoles> listaUsuarioRoles) {
+        this.listaUsuarioRoles = listaUsuarioRoles;
+    }
+    
+    
+    
 
 //    private DataList<AdUserRoles> listaUsuarioRoles = new DataList<AdUserRoles>() {
 //        @Override

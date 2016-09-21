@@ -216,11 +216,11 @@
         </attribute>
         <attribute>
             <name>rowKey</name>
-            <required>true</required>
+            <required>false</required>
         </attribute>
         <attribute>
             <name>title</name>
-            <required>true</required>
+            <required>false</required>
         </attribute>
         <attribute>
             <name>rendered</name>
