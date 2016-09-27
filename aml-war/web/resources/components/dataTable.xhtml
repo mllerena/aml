@@ -37,7 +37,7 @@
     <ae:default var="emptyMessage"
                 value="No existen registros para la consulta." />
 
-    <ae:default var="selectionMode" value="single" />	
+    <ae:default var="selectionMode" value="#{null}" />	
 
     <ae:default var="editable" value="#{false}" />
 
@@ -54,6 +54,12 @@
     <ae:default var="options" value="#{false}" />
 
     <ae:default var="selection" value="#{null}" />
+    
+    <ae:default var="paginatorAlwaysVisible" value="#{true}" />
+    
+    <ae:default var="rowStyleClass" value="#{null}" />
+    
+    <ae:default var="rowIndexVar" value="#{null}" />
 
 
 
@@ -62,11 +68,11 @@
     <p:dataTable id="#{id}" var="row" value="#{value}" widgetVar="#{widgetVar}"  
                  rowKey="#{rowKey}" paginator="true"  
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                  paginatorAlwaysVisible="true" rows="#{rows}"  
+                  paginatorAlwaysVisible="#{paginatorAlwaysVisible}" rows="#{rows}"  
                  rowsPerPageTemplate="#{rowsPerPageTemplate}"
                  emptyMessage="#{emptyMessage}" 
                  editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}"  rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"
-                 selectionMode="#{selectionMode}" selection="#{selection}" filteredValue="#{filteredValue}"> 
+                 selectionMode="#{selectionMode}" selection="#{selection}" filteredValue="#{filteredValue}" rowIndexVar="#{rowIndexVar}"> 
 
         
         <p:ajax event="filter" global="false" onstart="showSearchLoader();" oncomplete="hideSearchLoader();"/>  
@@ -110,10 +116,11 @@
         </p:column>
 
 
-
+        <!--
         <f:facet name="footer">
             <ui:insert name="footer"/>
         </f:facet>
+        -->
 
     </p:dataTable>
 

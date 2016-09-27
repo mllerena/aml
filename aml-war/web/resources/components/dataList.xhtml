@@ -31,20 +31,24 @@
 
     <ae:context dataTableId="dt_#{id}" widgetVarId="wv_dt_#{id}"> 
 
+        
 
 
         <h:panelGroup id="#{id}" style="height:100%;#{style}" rendered="#{rendered}">       
             
+            <o:methodParam name="onRowEditInit" value="#{value.onRowEditInit(row)}" />
+            <o:methodParam name="onRowEdit" value="#{value.onRowEdit(rowIndex)}" />
+            <o:methodParam name="onRowCancel" value="#{value.onRowCancel(rowIndex)}" />
             
-            <ae:dataTable id="#{dataTableId}" value="#{value.value}" var="row"  rowIndexVar="rowIndex"  widgetVar="#{widgetVarId}" auditable="false" rowKey="#{row.id}">  
+            <ae:dataTable id="#{dataTableId}" value="#{value.value}" var="row" rowStyleClass="no-color"  rowIndexVar="rowIndex"  widgetVar="#{widgetVarId}" auditable="false" rowKey="#{row.id}" paginatorAlwaysVisible="false" editable="true" selection="#{value.selectItems}">  
 
 
                 
 
                 <ui:define name="events">
-                    <p:ajax event="rowEditInit" global="false"  listener="#{value.onRowEditInit(item)}" onstart="hideTableButtons(); hideAdd();" />  
-                    <p:ajax event="rowEdit" listener="#{value.onRowEdit(rowIndex)}"  oncomplete="if(args.validationFailed){hideTableButtons(); hideAdd();}else{showTableButtons(); showAdd();}"/>
-                    <p:ajax event="rowEditCancel" listener="#{value.onRowCancel(rowIndex)}" oncomplete="showTableButtons(); showAdd();" />
+                    <p:ajax event="rowEditInit" global="false"  listener="#{onRowEditInit}" onstart="hideTableButtons(); hideAdd();" />  
+                    <p:ajax event="rowEdit" listener="#{onRowEdit}"  oncomplete="if(args.validationFailed){hideTableButtons(); hideAdd();}else{showTableButtons(); showAdd();}"/>
+                    <p:ajax event="rowEditCancel" listener="#{onRowCancel}" oncomplete="showTableButtons(); showAdd();" />
                 </ui:define>
                 
                 
