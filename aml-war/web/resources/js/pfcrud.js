@@ -82,9 +82,9 @@ function showAdd() {
 
 
 
-function showRow() {
-
-    $("#add").css("display", "none");
+function showRow(cmp) {
+    console.log("showRow cmp: "+cmp.id);
+    $("a[id='"+ cmp.id +"']").css("display", "none");
     $("#addrow").css("display", "block");
 
 

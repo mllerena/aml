@@ -34,7 +34,7 @@ public abstract class DataList<E extends AbstractEntityModel> {
 
     protected List<E> selectItems;
 
-    //protected E activeItem;
+    protected E newItem;
 
     protected List<E> modifiedItems;
 
@@ -204,6 +204,16 @@ public abstract class DataList<E extends AbstractEntityModel> {
     public void onRowCancel(int index) {
         
     }
+
+    public E getNewItem() {
+        return newItem;
+    }
+
+    public void setNewItem(E newItem) {
+        this.newItem = newItem;
+    }
+    
+    
 
     
 

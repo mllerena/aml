@@ -4,7 +4,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ae="http://primefaces.org/aeopensolutions"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:o="http://omnifaces.org/ui">
+                xmlns:o="http://omnifaces.org/ui"
+                 xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 
     <ae:default var="rendered" value="true" /> 
@@ -84,9 +85,10 @@
                                             <tbody  class="ui-datatable-data ui-widget-content">
                                                 <tr>
                                                     <td style="text-align: left !important;">
-                                                        <a style="display: inline;"  id="add" onclick="showRow();
-                                                                hideTableButtons();">Agregar item</a>
-                                                        &#160;
+                                                        
+                                                        
+                                                        <p:commandLink style="display: inline;text-decoration: none;" id="add" onclick="showRow(this);hideTableButtons();" value="Agregar" process="@this"></p:commandLink>
+                                                        
                                                     </td>
                                                 </tr>
                                                 
@@ -94,6 +96,7 @@
                                             <tfoot class="tableFoot"><td><tr></tr></td></tfoot>
                                         </table></div></div>
                             </div>  
+            
 
         </h:panelGroup>            
 
