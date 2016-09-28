@@ -8,6 +8,7 @@ package org.aeopensolutions.view.controllers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -205,7 +206,7 @@ public class AdUserControllers implements Serializable {
 
         @Override
         protected void cancel() {
-            
+            getListaUsuarioRoles().load();
         }
 
         @Override
@@ -247,6 +248,28 @@ public class AdUserControllers implements Serializable {
         public List<AdUserRoles> findAll() {
             return adUserRolesFacade.findByAdUser(getActiveItem());
         }
+
+        @Override
+        protected AdUserRoles rowAdd(AdUserRoles item) {
+            item = new AdUserRoles();
+            item.setId(BigInteger.ZERO);
+            return item;
+        }
+
+        @Override
+        protected void validateAddRow(AdUserRoles item) throws Exception{ 
+            if(  item.getAdRoleId() == null ){
+                
+                JsfUtils.messageError(null, "No puede estar vacio el rol", null);
+                
+                throw  new Exception("Error rol nulo");
+            }
+        }
+        
+        
+        
+        
+        
     };
 
     public DataList<AdUserRoles> getListaUsuarioRoles() {

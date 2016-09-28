@@ -320,15 +320,7 @@ button.ui-button.ui-state-default.gray-button {
     background-color: white;
 }
 
-.ui-corner-top{
-    border-top-left-radius: 0px !important;
-    border-top-right-radius: 0px !important;  
-}
 
-.ui-corner-bottom{
-    border-bottom-left-radius: 0px !important;
-    border-bottom-right-radius: 0px !important;
-}
 
 .tableFoot{
 
@@ -360,27 +352,28 @@ button.ui-button.ui-state-default.gray-button {
 }
 
 
-
+/*
 .ui-datatable .ui-row-editor .ui-icon-pencil {
-    background: url("#{resource['img/ic_edit.png']}") !important;
+    background: url("#{resource['images/ic_edit.png']}") !important;
     height: 18px !important;
 }
 
 .ui-datatable .ui-row-editor .ui-icon-close {
-    background: url("#{resource['img/ic_cancel.png']}") !important;
+    background: url("#{resource['images/ic_cancel.png']}") !important;
 }
 
 .ui-datatable .ui-icon-trash {
-    background: url("#{resource['img/ic_delete.png']}") !important;
+    background: url("#{resource['images/ic_delete.png']}") !important;
     display: inline-block;
     margin-right:10px !important;
     margin-bottom:2px !important;
 }
 
 .ui-datatable .ui-row-editor .ui-icon-check {
-    background: url("#{resource['img/ic_ok.png']}") !important;
+    background: url("#{resource['images/ic_ok.png']}") !important;
     margin-right:10px !important;
 }
+*/
 
 
 .ui-tabs .ui-tabs-panel {

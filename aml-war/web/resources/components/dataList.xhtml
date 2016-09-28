@@ -5,7 +5,7 @@
                 xmlns:ae="http://primefaces.org/aeopensolutions"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:o="http://omnifaces.org/ui"
-                 xmlns:jsf="http://xmlns.jcp.org/jsf">
+                xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 
     <ae:default var="rendered" value="true" /> 
@@ -27,44 +27,75 @@
     <ae:default var="labelCancel" value="Cancelar" />
     <ae:default var="labelProcess" value="Procesar" />
     <ae:default var="labelGenerate" value="Generar" />
+    
+    <ae:default var="editableRow" value="#{true}" />
+    
 
 
 
     <ae:context dataTableId="dt_#{id}" widgetVarId="wv_dt_#{id}"> 
 
-        
+
 
 
         <h:panelGroup id="#{id}" style="height:100%;#{style}" rendered="#{rendered}">       
-            
+
             <o:methodParam name="onRowEditInit" value="#{value.onRowEditInit(row)}" />
             <o:methodParam name="onRowEdit" value="#{value.onRowEdit(rowIndex)}" />
-            <o:methodParam name="onRowCancel" value="#{value.onRowCancel(rowIndex)}" />
+            <o:methodParam name="onRowEditCancel" value="#{value.onRowEditCancel(rowIndex)}" />
+            <o:methodParam name="onRowDelete" value="#{value.onRowDelete(row)}" />
             
+            
+            <o:methodParam name="onRowCancelAddRow" value="#{value.onRowCancel}" />
+            <o:methodParam name="onValidateAddRow" value="#{value.onValidateAddRow}" />
+            
+
             <ae:dataTable id="#{dataTableId}" value="#{value.value}" var="row" rowStyleClass="no-color"  rowIndexVar="rowIndex"  widgetVar="#{widgetVarId}" auditable="false" rowKey="#{row.id}" paginatorAlwaysVisible="false" editable="true" selection="#{value.selectItems}">  
 
 
-                
+
 
                 <ui:define name="events">
                     <p:ajax event="rowEditInit" global="false"  listener="#{onRowEditInit}" onstart="hideTableButtons(); hideAdd();" />  
                     <p:ajax event="rowEdit" listener="#{onRowEdit}"  oncomplete="if(args.validationFailed){hideTableButtons(); hideAdd();}else{showTableButtons(); showAdd();}"/>
-                    <p:ajax event="rowEditCancel" listener="#{onRowCancel}" oncomplete="showTableButtons(); showAdd();" />
+                    <p:ajax event="rowEditCancel" listener="#{onRowEditCancel}" oncomplete="showTableButtons(); showAdd();" />
                 </ui:define>
-                
-                
-                <p:column style="width:55px;"> 
+
+
+                <p:column style="width:55px;" id="cOptions" rendered="#{editableRow}"> 
+                    
                     <div style="display: inline-block;">
-                        <p:commandLink styleClass="ui-icon ui-icon-trash" process="@this"  actionListener="#{value.onRowDelete(rowIndex)}"/> 
+                        <h:commandLink actionListener="#{onRowDelete}" style="text-decoration: none"> 
+                            <h:outputText styleClass="ui-icon ui-icon-trash"></h:outputText>
+                            <f:ajax execute="@this" render="#{dataTableId}"></f:ajax>
+                        </h:commandLink>
                     </div>
-                    <p:rowEditor/>
+
+                    <div style="display: inline-block; ">
+                        
+                        <h:commandLink id="clCheckAddRow" style="text-decoration: none;display: none;" actionListener="#{onValidateAddRow}">  
+                            <h:outputText styleClass="ui-icon ui-icon-check"></h:outputText>
+                            <f:ajax execute="@this"></f:ajax>
+                        </h:commandLink>
+                        
+                    </div>
+                    <div style="display: inline-block;">  
+                        
+                        <h:commandLink id="clCloseAddRow" style="text-decoration: none;display: none;" onclick="showTableButtons();showAdd();" actionListener="#{onRowCancelAddRow}" > 
+                            <h:outputText styleClass="ui-icon ui-icon-close"></h:outputText>
+                            <f:ajax execute="@this" render="#{dataTableId}"></f:ajax>
+                        </h:commandLink>
+                        
+                    </div>
+
+                    <p:rowEditor id="reOpciones" />
                 </p:column>
-                
+
                 <ui:insert name="dataTable">
-                    
-                    
+
+
                 </ui:insert>
-                
+
                 <!--
                  <ae:context header="">
                     <ui:insert >
@@ -72,31 +103,34 @@
                     </ui:insert>
                 </ae:context>
                 -->
-               
+
 
 
 
             </ae:dataTable>
-            
-            <div id="extraLines">
-                                <div class="ui-datatable ui-widget datalist">
-                                    <div class="ui-datatable-tablewrapper">
-                                        <table role="grid">
-                                            <tbody  class="ui-datatable-data ui-widget-content">
-                                                <tr>
-                                                    <td style="text-align: left !important;">
-                                                        
-                                                        
-                                                        <p:commandLink style="display: inline;text-decoration: none;" id="add" onclick="showRow(this);hideTableButtons();" value="Agregar" process="@this"></p:commandLink>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                
-                                            </tbody>
-                                            <tfoot class="tableFoot"><td><tr></tr></td></tfoot>
-                                        </table></div></div>
-                            </div>  
-            
+
+            <o:methodParam name="onRowAdd" value="#{value.onRowAdd}" />
+
+            <div id="extraLines" jsf:rendered="#{editableRow}">
+                <div class="ui-datatable ui-widget datalist">
+                    <div class="ui-datatable-tablewrapper">
+                        <table role="grid">
+                            <tbody  class="ui-datatable-data ui-widget-content">
+                                <tr>
+                                    <td style="text-align: left !important;">
+
+
+                                        <p:commandLink style="display: inline;text-decoration: none;" id="addRow" value="Agregar" process="@this"
+                                                       actionListener="#{onRowAdd}" update="#{id}" oncomplete="addRowItem('#{dataTableId}');"></p:commandLink>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot class="tableFoot"><td><tr></tr></td></tfoot>
+                        </table></div></div>
+            </div>  
+
 
         </h:panelGroup>            
 

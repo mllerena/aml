@@ -138,7 +138,7 @@
                         <p:tab title="Roles">
                             
                             
-                            <ae:dataList id="dlTest" title="ok" value="#{adUser.listaUsuarioRoles}"  >
+                            <ae:dataList id="dlTest" title="ok" value="#{adUser.listaUsuarioRoles}"  editableRow="#{adUser.listaUsuarios.enabledSave}">
                                 <ui:define name="dataTable">
                                     <p:column headerText="Rol" filterBy="#{row.adRoleId.name}" > 
                                         <p:cellEditor>

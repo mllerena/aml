@@ -72,51 +72,44 @@ function showTableButtons() {
 }
 
 function hideAdd() {
-    $("#add").css("display", "none");
+    //$("#add").css("display", "none");
+    $( "a[id$='addRow']").css("display", "none");
 
 }
 
 function showAdd() {
-    $("#add").css("display", "inline");
+    $( "a[id$='addRow']").css("display", "inline");
+}
+
+function showTableButtonsAddRow(idTable){
+    $( "div[id$='"+idTable+"'] .ui-datatable-data > tr" ).last().find("a[id$='clCheckAddRow']").css("display", "inline");
+    $( "div[id$='"+idTable+"'] .ui-datatable-data > tr" ).last().find("a[id$='clCloseAddRow']").css("display", "inline");
 }
 
 
+function hideTableButtonsAddRow() {
 
-function showRow(cmp) {
-    console.log("showRow cmp: "+cmp.id);
-    $("a[id='"+ cmp.id +"']").css("display", "none");
-    $("#addrow").css("display", "block");
+    $( "div[id$='"+idTable+"'] .ui-datatable-data > tr" ).last().find("a[id$='clCheckAddRow']").css("display", "none");
+    $( "div[id$='"+idTable+"'] .ui-datatable-data > tr" ).last().find("a[id$='clCloseAddRow']").css("display", "none");
+}
 
-
-
-// alert(PF('partnerId').getSelectedValue() === '');
-
-//function validationFailed(){
-//    
-//    $("#add").css("display", "inline");
-//        $("#addrow").css("display", "none");
-//            PF('growl').renderMessage({"summary": message,
-//            "detail": "detail goes here",
-//            "severity": "warn"});
-//
-//        $("#partnerMenu").css("border", "2px solid #cd0a0a");
-//}
-//
-//    if (PF('partnerMenu').getSelectedValue() === '') {
-//
-//        $("#add").css("display", "none");
-//        $("#addrow").css("display", "block");
-//        
-//    window.setTimeout(validationFailed, 700);    
-//  
-//    }
-//
-//    else {
-//
-//        $("#add").css("display", "none");
-//        $("#addrow").css("display", "block");
-//
-//    }
+function addRowItem(idTable) {
+    
+    console.log(" addRowItem idTable: "+idTable);
+    
+    $( "div[id$='"+idTable+"'] .ui-datatable-data > tr" ).last().find('span.ui-icon-pencil').click();
+    showTableButtonsAddRow(idTable);
+    
+    hideTableButtons();
+    
+    
+    $( "div[id$='"+idTable+"'] .ui-datatable-data > tr .ui-row-editor" ).last().find('span.ui-icon-check').css('display', 'none');
+    $( "div[id$='"+idTable+"'] .ui-datatable-data > tr .ui-row-editor" ).last().find('span.ui-icon-close').css('display', 'none');
+    
+    hideAdd();
+    
+    console.log(" addRowItem click ok");
+    
 }
 
 function getWidgetVarById(id) {

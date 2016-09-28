@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.event.ActionEvent;
 import org.aeopensolutions.model.entities.AbstractEntityModel;
 import org.aeopensolutions.view.utils.JsfUtils;
+import org.primefaces.context.RequestContext;
 
 public abstract class DataList<E extends AbstractEntityModel> {
 
@@ -39,6 +40,9 @@ public abstract class DataList<E extends AbstractEntityModel> {
     protected List<E> modifiedItems;
 
     private String updateComponents;
+    
+    
+    
 
     public DataList() {
         init();
@@ -47,6 +51,7 @@ public abstract class DataList<E extends AbstractEntityModel> {
     public void init() {
         System.out.println("initialize DataList.. ");
         initialize();
+        
     }
 
     protected abstract void initialize();
@@ -182,13 +187,18 @@ public abstract class DataList<E extends AbstractEntityModel> {
         return getModifiedItems() != null ? getModifiedItems().size() : 0;
     }
     
-    public void onRowAdd(ActionEvent event) {
+     
 
+    public void onRowDelete(E row) {
         
-
-    }
-
-    public void onRowDelete(int Index) {
+        System.out.println("onRowDelete: "+row.getId());
+        
+        for (E bean:   getValue() ){
+            if(bean.getId().intValue()== row.getId().intValue()){
+                getValue().remove(bean);
+                break;
+            }
+        }
         
     }
 
@@ -201,8 +211,54 @@ public abstract class DataList<E extends AbstractEntityModel> {
         
     }
 
-    public void onRowCancel(int index) {
+    public void onRowEditCancel(int index) {
         
+    }
+    
+    public void onRowCancel(ActionEvent event) {    
+        
+        System.out.println("onRowCancel: "+getNewItem().getId());
+        
+        for (E bean:   getValue() ){
+            if(bean.getId().intValue()== getNewItem().getId().intValue()){
+                getValue().remove(bean);
+                break;
+            }
+        }
+    }
+    
+    protected E rowAdd(E item) {
+        return item;
+    }
+     
+    public void onRowAdd(ActionEvent event) {    
+        E row = rowAdd(newItem);
+        setNewItem(row);
+        getValue().add(row);
+        
+        System.out.println("onRowAdd: " + row.getId());
+    }
+    
+    public void onValidateAddRow(ActionEvent event) {   
+        
+        RequestContext context = RequestContext.getCurrentInstance();
+        
+        try{
+            validateAddRow(getNewItem());    
+            context.execute("showTableButtons();showAdd();");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        
+    }
+    
+    protected void validateAddRow(E item) throws Exception{
+        throw new UnsupportedOperationException();
+    }
+    
+     protected E rowCancel(E item) {
+        return item;
     }
 
     public E getNewItem() {
@@ -212,9 +268,8 @@ public abstract class DataList<E extends AbstractEntityModel> {
     public void setNewItem(E newItem) {
         this.newItem = newItem;
     }
-    
-    
 
+        
     
 
     
