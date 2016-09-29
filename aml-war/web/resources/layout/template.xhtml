@@ -29,7 +29,7 @@
 
         </h:head>
 
-        <h:body >
+        <h:body id="bDocument">
 
 
             <div class="ui-back-ground"></div>
@@ -53,10 +53,9 @@
 
             </h:form>
 
-            <p:spacer></p:spacer>
 
 
-            <div style="min-width: 500px;width: 1172px;margin: auto;padding: 20px;">
+            <div style="min-width: 500px;width: 100%;margin: auto;">
                 <div class="ui-content-center">
                     <ui:insert name="content">
                     </ui:insert> 
@@ -125,6 +124,7 @@
                         </h:form>
             -->
 
+            <ui:include src="ajaxLoader.xhtml"/> 
 
         </h:body>
     </html>

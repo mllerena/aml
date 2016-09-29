@@ -59,10 +59,13 @@ public class AdUserControllers implements Serializable {
     
     @Inject
     private AdUserRolesFacade adUserRolesFacade;
+    
+    private List<AdRole> roles;
 
     @PostConstruct
     public void initialize() {
         listaUsuarios.load();
+        roles = adRoleFacade.findAll();
     }
 
     public Part getImage() {
@@ -378,5 +381,15 @@ public class AdUserControllers implements Serializable {
     public void setPass2(String pass2) {
         this.pass2 = pass2;
     }
+
+    public List<AdRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<AdRole> roles) {
+        this.roles = roles;
+    }
+    
+    
 
 }

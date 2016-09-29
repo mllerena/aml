@@ -239,13 +239,13 @@ public abstract class DataList<E extends AbstractEntityModel> {
         System.out.println("onRowAdd: " + row.getId());
     }
     
-    public void onValidateAddRow(ActionEvent event) {   
-        
-        RequestContext context = RequestContext.getCurrentInstance();
+    public void onValidateAddRow(String dataTableId, E item) {   
         
         try{
-            validateAddRow(getNewItem());    
-            context.execute("showTableButtons();showAdd();");
+            System.out.println("onValidateAddRow: " + item.getId());
+            validateAddRow(item);    
+            JsfUtils.currentPFContext().execute("hideTableButtonsAddRow('"+dataTableId+"');showTableButtons();showAdd();");
+            JsfUtils.currentPFContext().update(  JsfUtils.findComponentById(dataTableId).getClientId());
         }catch(Exception e){
             e.printStackTrace();
         }

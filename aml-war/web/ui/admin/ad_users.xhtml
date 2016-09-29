@@ -146,7 +146,12 @@
                                             <h:outputText value="#{row.adRoleId.name}" />
                                         </f:facet>
                                         <f:facet name="input">
-                                            <p:inputText value="#{row.adRoleId.name}" />
+                                            <p:selectOneMenu value="#{row.adRoleId}" converter="#{adRoleConverter}" panelStyle="width:180px"
+                                                            effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith" >
+                                                <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                                <f:selectItems value="#{adUser.roles}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
+                                                <p:ajax event="change"></p:ajax>
+                                           </p:selectOneMenu>
                                         </f:facet>
                                     </p:cellEditor>
                                     </p:column>

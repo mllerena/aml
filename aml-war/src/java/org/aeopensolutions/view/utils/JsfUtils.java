@@ -23,6 +23,10 @@ public class JsfUtils {
         return getCurrentContext().getViewRoot().findComponent(id);
 
     }
+    
+    public static UIComponent findComponentById(String id) {
+        return getUIComponentOfId( findComponent("bDocument"),id );
+    }
 
     public static UIComponent getUIComponentOfId(UIComponent root, String id) {
         if (root.getId().contains(id)) {

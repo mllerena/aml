@@ -57,7 +57,7 @@
 
                 <ui:repeat value="#{value.viewTypesAvailable}" var="viewType" id="rViewType" >
 
-                    <p:commandLink style="font-size: 17px !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
+                    <p:commandLink style="font-size: 17px !important;outline: none !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
                                    update="@parent:@parent:pg_cmp_dv_#{id}" process="@this">
                         <f:attribute name="viewType" value="#{viewType}"></f:attribute>
                         <h:outputText styleClass="#{viewType eq 'TABLE' ? 'fa fa-bars' : viewType eq 'GRID' ? 'fa fa-th' : 'fa fa-file-o'}" />
@@ -139,9 +139,9 @@
 
         <h:panelGroup binding="#{pg_dataRow_id}" id="pg_dataRow_#{id}" layout="block" style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}" >
             
-            <p:panel header="#{titleRow}">
+            <!--<p:panel header="#{titleRow}"></p:panel>-->
                 <ui:insert name="dataRow"></ui:insert>        
-            </p:panel>
+            
         </h:panelGroup>
 
 

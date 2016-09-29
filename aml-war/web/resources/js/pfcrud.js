@@ -87,10 +87,13 @@ function showTableButtonsAddRow(idTable){
 }
 
 
-function hideTableButtonsAddRow() {
+function hideTableButtonsAddRow(idTable) {
 
     $( "div[id$='"+idTable+"'] .ui-datatable-data > tr" ).last().find("a[id$='clCheckAddRow']").css("display", "none");
     $( "div[id$='"+idTable+"'] .ui-datatable-data > tr" ).last().find("a[id$='clCloseAddRow']").css("display", "none");
+    
+    //$( "div[id$='"+idTable+"'] .ui-datatable-data > tr" ).last().find('span.ui-icon-check').click();
+    
 }
 
 function addRowItem(idTable) {
@@ -102,9 +105,9 @@ function addRowItem(idTable) {
     
     hideTableButtons();
     
-    
     $( "div[id$='"+idTable+"'] .ui-datatable-data > tr .ui-row-editor" ).last().find('span.ui-icon-check').css('display', 'none');
     $( "div[id$='"+idTable+"'] .ui-datatable-data > tr .ui-row-editor" ).last().find('span.ui-icon-close').css('display', 'none');
+    
     
     hideAdd();
     
