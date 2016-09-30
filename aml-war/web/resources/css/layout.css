@@ -1885,7 +1885,7 @@ html {
     -webkit-transition: margin-left 0.3s;
     transition: margin-left 0.3s;
     margin-left: 250px;
-    padding: 50px 16px 16px 16px; }
+    padding: 0px 16px 16px 16px; }
   .wrapper .footer {
     margin-left: 250px;
     height: 40px;

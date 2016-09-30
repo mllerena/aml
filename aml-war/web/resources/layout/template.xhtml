@@ -29,16 +29,17 @@
 
         </h:head>
 
-        <h:body id="bDocument">
+        <h:body id="bDocument" styleClass="main-body">
 
-
+<!--
             <div class="ui-back-ground"></div>
+-->
 
             <p:growl autoUpdate="true" > </p:growl>
 
            <h:form>
 
-                <p:menubar>
+               <p:menubar >
                     <p:submenu label="Configuración" icon="fa fa-gear">
                         <p:menuitem value="Usuarios" url="/ui/admin/ad_users.jsf"></p:menuitem>
                     </p:submenu>
@@ -55,12 +56,29 @@
 
 
 
-            <div style="min-width: 500px;width: 100%;margin: auto;">
+            
+                <!--
                 <div class="ui-content-center">
-                    <ui:insert name="content">
-                    </ui:insert> 
+                    
                 </div>
-            </div>
+                -->
+                
+                <div class="wrapper sidebar-inactive-l">
+                
+                <div class="main"> 
+                <div class="container">
+                    <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card">
+                        <h1 class="centerText">#{titleOption}</h1>
+                        <ui:insert name="content">
+                    </ui:insert> 
+                    </div>    
+                </div>
+                        </div></div></div>
+                    </div>
+                
+            
 
 
 

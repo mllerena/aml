@@ -1,3 +1,14 @@
+
+$(function() {
+    var alto = $( window ).height() - 100;
+    
+    $('.ui-content-center').each(function () {
+        $(this).css('min-height', alto+'px');
+    });
+    
+  });
+
+
 function handleSubmit(xhr, status, args, dialog) {
     var jqDialog = jQuery('#' + dialog.id);
     if (args.validationFailed) {

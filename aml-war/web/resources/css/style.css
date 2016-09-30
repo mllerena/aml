@@ -70,7 +70,10 @@ body {
     */
     border: 0px solid #d5d5d5;
     
+    /*
     background-color: #939393 !important;
+    */
+    background-color: rgba(255, 255, 255, .95);
     
     /*
     background-color: #e2e2e0 !important;
@@ -114,8 +117,10 @@ body {
 }
 
 .ui-content-center {
-    background: #fff;
+    
     background-color: rgba(255, 255, 255, .95);
+    
+    
     /*padding: 15px;*/
     /*width: 1172px;*/
     width: 100%;
@@ -133,7 +138,7 @@ body {
 
 .ui-back-ground {
     background-color: #fff;
-    background: url("#{resource['images/layout/fondo2.jpg']}")no-repeat center center fixed;
+    background: url("#{resource['images/layout/fondo3.jpg']}")no-repeat center center fixed;
     overflow: auto;
     width: 100%;
     height: 100%;
@@ -288,8 +293,10 @@ button.ui-button.ui-state-default.gray-button {
     border-right-width: 0px !important;
     border-top-width: 0px !important;
     border-bottom-width: 0px !important;
-    background: transparent !important;
-    /*background-color: rgba(255, 255, 255, .95) !important;*/
+    
+    /*background: transparent !important;*/
+    
+    background-color: rgba(255, 255, 255, .95) !important;
     border-color: #ddd !important;
 }
 
@@ -356,12 +363,8 @@ button.ui-button.ui-state-default.gray-button {
 
 
 .tableFoot{
-
-    border-top: 2px solid #cacaca;
-    border-bottom: 1px solid #cacaca;
     background: #eee;
     font-weight: bold;
-
     vertical-align: middle;
 }
 
@@ -411,5 +414,32 @@ button.ui-button.ui-state-default.gray-button {
 
 
 .ui-tabs .ui-tabs-panel {
-    padding: 4px !important;
+    padding: 5px !important;
+}
+
+.form-body {
+    border: none !important;
+    max-width: 1172px;
+    margin-left: auto;
+    padding: 0px 6px 6px 6px !important;
+    margin-bottom: 15px;
+    margin-right: auto;
+    margin-top: 18px;
+}
+
+.ui-g-12 {
+    padding: 0px !important;
+}
+
+.card-row-item {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background: #ffffff;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
 }

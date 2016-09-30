@@ -11,8 +11,11 @@
 
     <h:panelGroup id="pg_cmp_dv_#{id}">
 
-        <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix ui-widget-header">
+        
+        
+       <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix ui-widget-header">
             <div class="ui-toolbar-group-left">
+                
                 <p:commandButton process="@this" rendered="#{value.enabledCreate}" value="Crear" icon="fa fa-plus" actionListener="#{value.actionCreate}" update="@parent:@parent" styleClass="red-button"/> 
 
                 <p:commandButton ajax="false" rendered="#{value.enabledSave}" value="Guardar" icon="fa fa-save" actionListener="#{value.actionSave}" 
@@ -73,6 +76,17 @@
 
 
         </p:outputPanel>
+        
+                
+                
+
+            
+
+                
+
+
+
+            
 
         <p:spacer height="2"></p:spacer>                                                                                                                                                                                                                                             
 
@@ -137,10 +151,32 @@
 
 
 
-        <h:panelGroup binding="#{pg_dataRow_id}" id="pg_dataRow_#{id}" layout="block" style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}" >
+        <h:panelGroup binding="#{pg_dataRow_id}" id="pg_dataRow_#{id}" layout="block" style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}">
             
-            <!--<p:panel header="#{titleRow}"></p:panel>-->
+            <!--
+            <div class="ui-g-12">
+            <div class="card">
+                <h1 class="centerText">Linear Chart</h1>
+            </div>
+                card-row-item
+            </div>
+            -->
+            
+            
+            
+            <h:panelGroup id="pgcont_row_#{id}" layout="block" styleClass="form-body">
+            
+                <div class="card-row-item">
+                    <h1 style="font-size: 15px !important;height: 15px;">#{titleRow}</h1>
+                    <ui:insert name="dataRow"></ui:insert>        
+                </div> 
+                <!--
+            <p:panel header="#{titleRow}" >
                 <ui:insert name="dataRow"></ui:insert>        
+                
+            </p:panel>    -->
+                
+                </h:panelGroup>
             
         </h:panelGroup>
 

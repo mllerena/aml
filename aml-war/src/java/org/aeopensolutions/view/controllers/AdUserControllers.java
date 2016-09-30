@@ -171,6 +171,7 @@ public class AdUserControllers implements Serializable {
             setPass1(null);
             setPass2(null);
             setActiveItem(new AdUser());
+            getListaUsuarioRoles().load();
             return getActiveItem();
         }
 

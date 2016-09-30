@@ -9,6 +9,8 @@
 
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:o="http://omnifaces.org/ui">
+    
+    <ui:param name="titleOption" value="Gestión Usuarios" />
 
     <ui:define name="head">
         <script>
@@ -49,11 +51,13 @@
     </ui:define>
 
     <ui:define name="content">
+        
+        
 
         <h:form id="frmUsuarios" enctype="multipart/form-data" >
 
 
-            <ae:dataView id="dvUsuarios" value="#{adUser.listaUsuarios}" titleRow="Datos del usuario"> 
+            <ae:dataView id="dvUsuarios" value="#{adUser.listaUsuarios}" titleRow="Código: #{adUser.activeItem.id}"> 
 
                 <ui:define name="dataTable">
                     <p:column headerText="Usuario" filterBy="#{row.name}" > 
