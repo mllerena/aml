@@ -134,6 +134,12 @@
                         <p:spacer></p:spacer>
                         <p:inputText id="itPass2" value="#{adUser.pass2}" placeholder="Confirmar contraseña" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth" type="password"/>
                         
+                        <!--
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText id="name"/>
+                            <p:outputLabel for="name" value="Name" />
+                        </h:panelGroup>-->
+                        
 
                     </h:panelGrid>
                     <br></br>
@@ -163,6 +169,8 @@
                             </ae:dataList>
                             
                             
+                        </p:tab>
+                        <p:tab title="Otra Info">
                         </p:tab>
                     </p:tabView>
 
