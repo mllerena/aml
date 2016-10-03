@@ -8,7 +8,6 @@ $(function() {
     
   });
 
-
 function handleSubmit(xhr, status, args, dialog) {
     var jqDialog = jQuery('#' + dialog.id);
     if (args.validationFailed) {
