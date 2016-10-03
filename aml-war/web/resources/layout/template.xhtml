@@ -45,7 +45,7 @@
                     </p:submenu>
                     <p:menuitem value="Inicio" url="/home.jsf" icon="fa fa-home"></p:menuitem>
                     <f:facet name="options">
-                        <p:menuButton value="#{login.adUser.name.toUpperCase()}" >
+                        <p:menuButton value="#{login.adUser.firstname.toUpperCase()} #{login.adUser.lastname.toUpperCase()}" >
                             <p:menuitem  value="Cerrar" icon="ui-icon-extlink" actionListener="#{login.logout()}"></p:menuitem>
                         </p:menuButton>
 
